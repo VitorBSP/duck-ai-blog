@@ -1,0 +1,66 @@
+---
+import NewsletterBox from '../components/NewsletterBox.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import { AUTHOR_NAME, BRAND_HANDLE_LABEL, GITHUB_URL } from '../consts';
+---
+
+<MainLayout
+	title="Sobre"
+	description="Conheça a Duck AI e os princípios editoriais e metodológicos de Vítor Pereira em modelagem estatística, dados públicos e IA."
+>
+	<article class="article-shell">
+		<div class="container-narrow">
+			<header class="article-header">
+				<p class="eyebrow">Manifesto &amp; Rigor Editorial</p>
+				<h1 class="article-title">Sobre a Duck AI</h1>
+				<p class="article-lead">
+					A <strong>Duck AI</strong> é o laboratório independente de <strong>{AUTHOR_NAME}</strong>{' '}
+					dedicado a transformar modelagem estatística, probabilidades e dados públicos em produtos
+					úteis — documentados em público.
+				</p>
+			</header>
+
+			<div class="prose">
+				<h2>Por que um fio condutor de dados e transparência?</h2>
+				<p>
+					Ao criar projetos em áreas aparentemente distantes — futebol no <strong>Ainda Dá</strong> e
+					estatística pública no <strong>Radar Eleitoral</strong> — ficou claro que todos compartilham
+					o mesmo núcleo: <em>lidar honestamente com incerteza usando engenharia limpa e dados
+					verificáveis</em>.
+				</p>
+
+				<h2>Princípios editoriais inegociáveis</h2>
+				<ul>
+					<li>
+						<strong>Fontes primárias sempre citadas:</strong> nenhum dado eleitoral ou estatístico vai
+						ao ar sem link verificável para bases oficiais (como TSE, IBGE, Congresso Nacional ou
+						documentação técnica aberta).
+					</li>
+					<li>
+						<strong>Neutralidade analítica no Radar Eleitoral:</strong> separamos rigorosamente dado
+						observado, metodologia de modelo e incerteza — sem torcida nem adjetivação partidária.
+					</li>
+					<li>
+						<strong>IA como ferramenta, humano como editor:</strong> usamos agentes de IA para
+						pesquisa, organização e primeiros rascunhos, mas 100% do conteúdo publicado passa por
+						validação automatizada (Quality Gate) e revisão humana antes do merge.
+					</li>
+					<li>
+						<strong>Custo enxuto e métricas honestas:</strong> compartilhamos abertamente o que gera
+						uso real e receita — e também os experimentos que não funcionam.
+					</li>
+				</ul>
+
+				<h2>Onde acompanhar</h2>
+				<p>
+					As atualizações diárias de código, modelos e experimentos saem no perfil único do X
+					(<strong>{BRAND_HANDLE_LABEL}</strong>) e no <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>.
+				</p>
+			</div>
+
+			<div style="margin-top: 3rem;">
+				<NewsletterBox idPrefix="about-nl" />
+			</div>
+		</div>
+	</article>
+</MainLayout>

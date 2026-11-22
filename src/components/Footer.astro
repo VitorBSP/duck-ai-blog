@@ -1,0 +1,19 @@
+---
+import { AUTHOR_NAME, GITHUB_URL, PHASE1_PROJECTS, SITE_TITLE } from '../consts';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="container footer-inner">
+		<div>
+			<strong>{SITE_TITLE}</strong> · {AUTHOR_NAME} © {year}. Construído em público com Astro e transparência metodológica.
+		</div>
+		<div class="footer-links">
+			<a href={PHASE1_PROJECTS['ainda-da'].url} target="_blank" rel="noopener noreferrer">Ainda Dá</a>
+			<a href={PHASE1_PROJECTS['radar-eleitoral'].url} target="_blank" rel="noopener noreferrer">Radar Eleitoral</a>
+			<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
+			<a href="/rss.xml">RSS</a>
+		</div>
+	</div>
+</footer>

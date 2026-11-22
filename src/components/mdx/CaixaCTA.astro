@@ -1,0 +1,40 @@
+---
+import { buildUtmUrl } from '../../consts';
+
+interface Props {
+	titulo: string;
+	descricao: string;
+	rotuloBotao: string;
+	url: string;
+	campaignId: string;
+	medium?: string;
+}
+
+const {
+	titulo,
+	descricao,
+	rotuloBotao,
+	url,
+	campaignId,
+	medium = 'cta_inline',
+} = Astro.props;
+
+const trackedUrl = buildUtmUrl(url, campaignId, medium);
+const isExternal = trackedUrl.startsWith('http');
+---
+
+<aside class="cta-box" aria-label={titulo}>
+	<div class="cta-box-copy">
+		<p class="cta-box-title">{titulo}</p>
+		<p class="cta-box-desc">{descricao}</p>
+	</div>
+	<a
+		class="btn btn-primary cta-box-action"
+		href={trackedUrl}
+		target={isExternal ? '_blank' : undefined}
+		rel={isExternal ? 'noopener noreferrer' : undefined}
+	>
+		{rotuloBotao}
+		<span aria-hidden="true">→</span>
+	</a>
+</aside>

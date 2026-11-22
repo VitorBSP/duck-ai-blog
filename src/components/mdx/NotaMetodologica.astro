@@ -1,0 +1,18 @@
+---
+interface Props {
+	titulo?: string;
+	projeto?: string;
+}
+
+const { titulo = 'Nota Metodológica', projeto } = Astro.props;
+---
+
+<aside class="methodology-box" role="note" aria-label={titulo}>
+	<div class="methodology-header">
+		<span class="methodology-kicker">{titulo}</span>
+		{projeto && <span class="methodology-tag">{projeto}</span>}
+	</div>
+	<div class="methodology-body">
+		<slot />
+	</div>
+</aside>

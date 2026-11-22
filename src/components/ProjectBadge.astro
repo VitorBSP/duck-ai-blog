@@ -1,0 +1,12 @@
+---
+import { PHASE1_PROJECTS, type ProjectKey } from '../consts';
+
+interface Props {
+	project: ProjectKey;
+}
+
+const { project } = Astro.props;
+const meta = PHASE1_PROJECTS[project];
+---
+
+<span class="project-badge" data-project={project}>{meta.shortLabel}</span>

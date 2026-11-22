@@ -1,0 +1,70 @@
+---
+import { NEWSLETTER_ACTION_URL } from '../consts';
+
+interface Props {
+	idPrefix?: string;
+}
+
+const { idPrefix = 'nl' } = Astro.props;
+const hasBackend = Boolean(NEWSLETTER_ACTION_URL);
+---
+
+<section class="newsletter-box" aria-labelledby={`${idPrefix}-title`}>
+	<div>
+		<p class="newsletter-kicker">Boletim Técnico Semanal</p>
+		<h2 id={`${idPrefix}-title`} class="newsletter-title">
+			Dados, probabilidades e bastidores da Duck AI direto na sua caixa
+		</h2>
+		<p class="newsletter-desc">
+			Um resumo por semana com novas simulações do <strong>Ainda Dá</strong>, análises abertas do{' '}
+			<strong>Radar Eleitoral</strong> e aprendizados reais de automação com IA. Sem spam.
+		</p>
+	</div>
+
+	<form
+		id={`${idPrefix}-form`}
+		class="newsletter-form"
+		action={hasBackend ? NEWSLETTER_ACTION_URL : undefined}
+		method={hasBackend ? 'post' : undefined}
+		data-has-backend={String(hasBackend)}
+	>
+		<label for={`${idPrefix}-email`} class="sr-only">Seu melhor e-mail</label>
+		<div class="newsletter-row">
+			<input
+				id={`${idPrefix}-email`}
+				class="newsletter-input"
+				type="email"
+				name="email"
+				required
+				autocomplete="email"
+				placeholder="voce@exemplo.com"
+			/>
+			<button id={`${idPrefix}-submit`} class="newsletter-submit" type="submit">
+				Inscrever
+			</button>
+		</div>
+		<p class="newsletter-note">
+			Integração pronta para Brevo ou MailerLite (configure <code>NEWSLETTER_ACTION_URL</code> em{' '}
+			<code>src/consts.ts</code>).
+		</p>
+		<p id={`${idPrefix}-status`} class="newsletter-status" role="status" aria-live="polite"></p>
+	</form>
+</section>
+
+<script is:inline define:vars={{ idPrefix }}>
+	(() => {
+		const form = document.getElementById(`${idPrefix}-form`);
+		const status = document.getElementById(`${idPrefix}-status`);
+		if (!form || !status) return;
+		if (form.dataset.hasBackend === 'true') return;
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const input = document.getElementById(`${idPrefix}-email`);
+			if (!input || !input.value.includes('@')) return;
+			status.textContent =
+				'Formulário validado! Conecte sua URL gratuita da Brevo/MailerLite em src/consts.ts para ativar a captura real.';
+			input.value = '';
+		});
+	})();
+</script>

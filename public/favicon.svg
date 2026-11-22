@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#F7F6F2"/>
+  <!-- Monograma Editorial D (vencedor da auditoria visual) -->
+  <path d="M14 11H31C44.5 11 52 19.2 52 32C52 44.8 44.5 53 31 53H14V11Z" fill="#14191F"/>
+  <!-- Espaço negativo: cabeça e pescoço do pato -->
+  <path d="M23 45V30C23 23.2 27.6 19 33.4 19C38.6 19 41.8 22.2 43.8 26.2L50.5 29.2L44 35.4C41.2 35.6 38.4 36.2 36.2 38.4C34.2 40.4 34.4 43 35.8 45H23Z" fill="#F7F6F2"/>
+  <!-- Olho isolado de alto contraste -->
+  <circle cx="34.5" cy="27.2" r="2.7" fill="#14191F"/>
+  <!-- Bico âmbar rompendo a curva direita do D -->
+  <path d="M41.2 27.5C45.2 29.8 50.8 31.3 56.8 31.6C56.2 35.4 53.1 37.3 48.2 37.3H38.8C40.7 35 41.7 31.6 41.2 27.5Z" fill="#EA960A"/>
+</svg>

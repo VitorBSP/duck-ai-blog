@@ -1,0 +1,19 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Página não encontrada" description="O conteúdo solicitado não foi localizado no blog Duck AI.">
+	<section class="section" style="padding: 5.5rem 0;">
+		<div class="container-narrow" style="text-align: center;">
+			<p class="eyebrow">Erro 404</p>
+			<h1 class="hero-title" style="margin-bottom: 1rem;">Página não encontrada</h1>
+			<p class="hero-lead" style="margin: 0 auto 2rem;">
+				O artigo ou rota que você procurou mudou de endereço ou ainda está em revisão.
+			</p>
+			<div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+				<a class="btn btn-primary" href="/">Voltar ao início</a>
+				<a class="btn btn-secondary" href="/blog">Ver todos os artigos</a>
+			</div>
+		</div>
+	</section>
+</MainLayout>

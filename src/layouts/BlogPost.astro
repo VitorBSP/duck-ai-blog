@@ -1,0 +1,101 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import NewsletterBox from '../components/NewsletterBox.astro';
+import ProjectBadge from '../components/ProjectBadge.astro';
+import { AUTHOR_NAME } from '../consts';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	project,
+	campaign_id,
+	tags,
+	readingTimeMinutes,
+	primarySources,
+	methodologyNote,
+	heroImage,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			image={heroImage}
+			article={{ pubDate, updatedDate, tags, campaignId: campaign_id }}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main class="article-shell">
+			<article class="container-narrow">
+				<header class="article-header">
+					<div class="article-meta-top">
+						<ProjectBadge project={project} />
+						<span><FormattedDate date={pubDate} /></span>
+						<span>· {readingTimeMinutes} min de leitura</span>
+					</div>
+
+					<h1 class="article-title">{title}</h1>
+					<p class="article-lead">{description}</p>
+
+					<div class="article-byline">
+						<span>Por <strong>{AUTHOR_NAME}</strong></span>
+						{updatedDate && (
+							<span>Atualizado em <FormattedDate date={updatedDate} /></span>
+						)}
+						<span>Campanha: <code>{campaign_id}</code></span>
+					</div>
+				</header>
+
+				<div class="prose">
+					<slot />
+				</div>
+
+				{
+					(primarySources.length > 0 || methodologyNote) && (
+						<section class="sources-section" aria-label="Fontes primárias e transparência">
+							<h2 class="sources-title">Fontes Primárias &amp; Rastreabilidade</h2>
+							{methodologyNote && (
+								<p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0 0 1rem;">
+									{methodologyNote}
+								</p>
+							)}
+							{primarySources.length > 0 && (
+								<ul class="sources-list">
+									{primarySources.map((src) => (
+										<li>
+											<a href={src.url} target="_blank" rel="noopener noreferrer">
+												{src.label} ↗
+											</a>
+										</li>
+									))}
+								</ul>
+							)}
+							<div class="tag-list">
+								{tags.map((tag) => (
+									<span class="tag-chip">#{tag}</span>
+								))}
+							</div>
+						</section>
+					)
+				}
+
+				<div style="margin-top: 3.25rem;">
+					<NewsletterBox idPrefix="article-nl" />
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

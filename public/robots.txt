@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://duck-ai-blog.pages.dev/sitemap-index.xml

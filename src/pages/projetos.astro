@@ -1,0 +1,110 @@
+---
+import NewsletterBox from '../components/NewsletterBox.astro';
+import ProjectBadge from '../components/ProjectBadge.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import { PHASE1_PROJECTS, PHASE2_ROADMAP, buildUtmUrl } from '../consts';
+
+const activeApps = [PHASE1_PROJECTS['ainda-da'], PHASE1_PROJECTS['radar-eleitoral']];
+---
+
+<MainLayout
+	title="Projetos"
+	description="Portfólio ativo da Duck AI: Ainda Dá (probabilidades de futebol), Radar Eleitoral (dados públicos) e o roadmap da Fase 2."
+>
+	<section class="section">
+		<div class="container">
+			<div class="section-header">
+				<div>
+					<p class="eyebrow">Portfólio Duck AI</p>
+					<h1 class="section-title" style="font-size: clamp(2rem, 3.6vw, 2.7rem);">
+						Produtos em Produção &amp; Roadmap
+					</h1>
+					<p class="section-subtitle">
+						Priorizamos poucos projetos ativos por ciclo para garantir qualidade técnica, distribuição
+						orgânica e validação real de uso.
+					</p>
+				</div>
+			</div>
+
+			<div class="projects-grid">
+				{
+					activeApps.map((proj) => (
+						<article class="project-card">
+							<div>
+								<div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;">
+									<ProjectBadge project={proj.id} />
+									<span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">
+										{proj.status}
+									</span>
+								</div>
+								<h2>{proj.name}</h2>
+								<p style="font-weight: 600; color: var(--text); margin-bottom: 0.5rem;">
+									{proj.tagline}
+								</p>
+								<p>{proj.description}</p>
+							</div>
+							<div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">
+								<span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);">
+									{proj.focus}
+								</span>
+								<a
+									class="btn btn-primary"
+									href={buildUtmUrl(proj.url, `portfolio_${proj.id}`, 'projects_page')}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									Acessar produto ↗
+								</a>
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section section-bordered">
+		<div class="container">
+			<div class="section-header">
+				<div>
+					<h2 class="section-title">Em Fila — Fase 2</h2>
+					<p class="section-subtitle">
+						Projetos do ecossistema que entram na esteira editorial assim que os gatilhos de tração
+						da Fase 1 forem validados.
+					</p>
+				</div>
+			</div>
+
+			<div style="overflow-x: auto;">
+				<table class="roadmap-table">
+					<thead>
+						<tr>
+							<th>Projeto</th>
+							<th>Nicho</th>
+							<th>Estágio</th>
+							<th>Proposta</th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							PHASE2_ROADMAP.map((item) => (
+								<tr>
+									<td><strong>{item.name}</strong></td>
+									<td>{item.niche}</td>
+									<td style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-muted);">
+										{item.stage}
+									</td>
+									<td>{item.summary}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+
+			<div style="margin-top: 3.5rem;">
+				<NewsletterBox idPrefix="proj-nl" />
+			</div>
+		</div>
+	</section>
+</MainLayout>

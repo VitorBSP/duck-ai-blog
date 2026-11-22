@@ -1,0 +1,25 @@
+---
+interface StatItem {
+	valor: string;
+	rotulo: string;
+	nota?: string;
+}
+
+interface Props {
+	itens: StatItem[];
+}
+
+const { itens } = Astro.props;
+---
+
+<div class="metric-strip" role="region" aria-label="Indicadores principais">
+	{
+		itens.map((item) => (
+			<div class="metric-item">
+				<span class="metric-value">{item.valor}</span>
+				<span class="metric-label">{item.rotulo}</span>
+				{item.nota && <span class="metric-note">{item.nota}</span>}
+			</div>
+		))
+	}
+</div>
