@@ -10,12 +10,13 @@ Blog editorial da marca **Vítor Pereira | Duck AI**, construído em **Astro + M
    - **Node.js version:** `22`
 3. Depois de ativar o domínio próprio (ou o subdomínio `.pages.dev`), atualize `site` em `astro.config.mjs` e `site_url` em `cerebro-operacao/config/projects/blog-central.json`.
 
-## Identidade Visual & Assets Prontos (`public/brand/`)
-- `public/brand/logo-duck-ai.png` — Vencedor da auditoria visual (**Monograma Editorial "D"**, 92/100)
-- `public/brand/avatar-x-400x400.png` — Pronto para upload como foto de perfil no X (`Vítor Pereira | Duck AI`)
-- `public/brand/banner-x-1500x500.png` — Recorte exato 3:1 (1500×500px) pronto para capa do X
-- `public/brand/og-default.jpg` — Open Graph padrão (1200×630px)
-- `public/brand/opcoes/` — Todas as 5 opções `v2` auditadas caso queira trocar o logo depois (basta sobrescrever `logo-duck-ai.png` e `avatar-x-400x400.png`)
+## Identidade Visual em 3 Níveis (`public/brand/`)
+- **Uso Comum / Principal:** `public/brand/logo-duck-ai.png` (ícone puro para cabeçalho/favicon) + `public/brand/logo-duck-ai-padrao.png` e `public/brand/avatar-x-400x400.png` (ícone + wordmark **Duck AI** para avatar do X)
+- **Versão Expandida (Horizontal):** `public/brand/logo-duck-ai-expandido.png` (pato Curva de Probabilidade + `Duck AI · ESTATÍSTICA · IA · OPEN CODE`)
+- **Versão Tunada / PRO:** `public/brand/logo-duck-ai-pro.png` (pato geométrico facetado sobre petróleo escuro + badge **Duck AI PRO**)
+- **Banner do X (`1500×500px` exato):** `public/brand/banner-x-1500x500.png` (`Duck AI · Estatística · IA · Open Code`)
+- **Card Open Graph (`1200×630px`):** `public/brand/og-default.jpg`
+- **Backup das 5 opções originais:** `public/brand/opcoes/`
 
 ## Contrato de Publicação para o Agente 2 (Editor)
 - Todo novo artigo deve ser gravado em `src/content/blog/<slug>.mdx` via Pull Request (nunca direto na `main`).

@@ -1,7 +1,7 @@
 export const SITE_TITLE = 'Duck AI';
-export const SITE_TAGLINE = 'Modelagem estatística, dados públicos e IA aplicada a produtos reais.';
+export const SITE_TAGLINE = 'Estatística, IA e Open Code aplicados a produtos reais.';
 export const SITE_DESCRIPTION =
-	'Bastidores técnicos, probabilidades no futebol (Ainda Dá), dados abertos eleitorais (Radar Eleitoral) e engenharia de produtos com IA por Vítor Pereira.';
+	'Estatística, IA e Open Code na prática: bastidores de engenharia, probabilidades no futebol (Ainda Dá) e modelagem eleitoral (Radar Eleitoral) por Vítor Pereira.';
 export const AUTHOR_NAME = 'Vítor Pereira';
 export const BRAND_HANDLE_LABEL = 'Vítor Pereira | Duck AI';
 export const X_PROFILE_URL = 'https://x.com/'; // Atualize com seu @ assim que criar o perfil
@@ -28,12 +28,12 @@ export const PHASE1_PROJECTS: Record<ProjectKey, ProjectMeta> = {
 		id: 'blog-central',
 		name: 'Duck AI — Blog Central',
 		shortLabel: 'Duck AI',
-		tagline: 'Engenharia, agentes de IA e build in public',
+		tagline: 'Estatística, IA e Open Code em público',
 		description:
 			'Bastidores técnicos de arquitetura, automação de baixo custo e experimentos de monetização de produtos digitais.',
 		url: '/blog',
 		status: 'Hub Editorial',
-		focus: 'Arquitetura & Build in Public',
+		focus: 'IA & Open Code',
 	},
 	'ainda-da': {
 		id: 'ainda-da',
@@ -50,12 +50,12 @@ export const PHASE1_PROJECTS: Record<ProjectKey, ProjectMeta> = {
 		id: 'radar-eleitoral',
 		name: 'Radar Eleitoral',
 		shortLabel: 'Radar Eleitoral',
-		tagline: 'Modelagem e transparência em dados eleitorais',
+		tagline: 'Modelagem estatística e transparência eleitoral',
 		description:
-			'Análise neutra, metodológica e verificável construída sobre bases oficiais do TSE e do IBGE.',
+			'Análise neutra, metodológica e verificável construída sobre séries históricas e bases oficiais do TSE e do IBGE.',
 		url: 'https://radar-eleitoral-web-one.vercel.app/',
 		status: 'Ativo · Fase 1',
-		focus: 'Dados Públicos & TSE',
+		focus: 'Estatística & Modelagem',
 	},
 };
 
