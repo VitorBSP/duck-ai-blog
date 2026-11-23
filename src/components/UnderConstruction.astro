@@ -1,0 +1,32 @@
+---
+interface Props {
+	heading?: string;
+	description?: string;
+}
+
+const {
+	heading = 'Artigos em construção na oficina',
+	description = 'Estou revisando os textos iniciais da Duck AI para deixar cada explicação mais humana, direta e fácil de acompanhar. Enquanto os artigos passam por revisão, você pode explorar os projetos no ar ou ler sobre o laboratório.',
+} = Astro.props;
+---
+
+<aside class="construction-card" aria-label={heading}>
+	<div class="construction-media">
+		<img
+			src="/brand/artigos-em-construcao.jpg"
+			alt="Ilustração do pato da Duck AI usando capacete de obra diante de uma prancheta com curva de probabilidade"
+			width="800"
+			height="600"
+			loading="eager"
+		/>
+	</div>
+	<div class="construction-copy">
+		<span class="construction-badge">Em revisão editorial</span>
+		<h3 class="construction-title">{heading}</h3>
+		<p class="construction-desc">{description}</p>
+		<div class="construction-actions">
+			<a class="btn btn-primary" href="/projetos">Explorar projetos</a>
+			<a class="btn btn-secondary" href="/sobre">Sobre a Duck AI</a>
+		</div>
+	</div>
+</aside>

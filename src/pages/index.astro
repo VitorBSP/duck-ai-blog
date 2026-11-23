@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import NewsletterBox from '../components/NewsletterBox.astro';
 import ProjectBadge from '../components/ProjectBadge.astro';
+import UnderConstruction from '../components/UnderConstruction.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 import {
 	BRAND_HANDLE_LABEL,
@@ -79,40 +80,48 @@ const liveProducts = [PHASE1_PROJECTS['ainda-da'], PHASE1_PROJECTS['radar-eleito
 					</p>
 				</div>
 
-				<div class="filter-bar" role="group" aria-label="Filtrar artigos por projeto">
-					<button class="filter-btn is-active" type="button" data-filter="all">Todos</button>
-					<button class="filter-btn" type="button" data-filter="blog-central">Duck AI</button>
-					<button class="filter-btn" type="button" data-filter="ainda-da">Ainda Dá</button>
-					<button class="filter-btn" type="button" data-filter="radar-eleitoral">
-						Radar Eleitoral
-					</button>
-				</div>
-			</div>
-
-			<div id="home-post-grid" class="post-grid">
 				{
-					posts.map((post) => (
-						<article class="post-card" data-project={post.data.project}>
-							<div>
-								<div class="post-card-meta">
-									<ProjectBadge project={post.data.project} />
-									<FormattedDate date={post.data.pubDate} />
-								</div>
-								<h3 class="post-card-title">
-									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-								</h3>
-								<p class="post-card-desc">{post.data.description}</p>
-							</div>
-							<div class="post-card-footer">
-								<span>{post.data.readingTimeMinutes} min de leitura</span>
-								<a class="read-more" href={`/blog/${post.id}/`}>
-									Ler artigo →
-								</a>
-							</div>
-						</article>
-					))
+					posts.length > 0 && (
+						<div class="filter-bar" role="group" aria-label="Filtrar artigos por projeto">
+							<button class="filter-btn is-active" type="button" data-filter="all">Todos</button>
+							<button class="filter-btn" type="button" data-filter="blog-central">Duck AI</button>
+							<button class="filter-btn" type="button" data-filter="ainda-da">Ainda Dá</button>
+							<button class="filter-btn" type="button" data-filter="radar-eleitoral">
+								Radar Eleitoral
+							</button>
+						</div>
+					)
 				}
 			</div>
+
+			{
+				posts.length > 0 ? (
+					<div id="home-post-grid" class="post-grid">
+						{posts.map((post) => (
+							<article class="post-card" data-project={post.data.project}>
+								<div>
+									<div class="post-card-meta">
+										<ProjectBadge project={post.data.project} />
+										<FormattedDate date={post.data.pubDate} />
+									</div>
+									<h3 class="post-card-title">
+										<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+									</h3>
+									<p class="post-card-desc">{post.data.description}</p>
+								</div>
+								<div class="post-card-footer">
+									<span>{post.data.readingTimeMinutes} min de leitura</span>
+									<a class="read-more" href={`/blog/${post.id}/`}>
+										Ler artigo →
+									</a>
+								</div>
+							</article>
+						))}
+					</div>
+				) : (
+					<UnderConstruction />
+				)
+			}
 		</div>
 	</section>
 

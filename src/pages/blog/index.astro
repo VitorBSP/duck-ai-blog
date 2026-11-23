@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import NewsletterBox from '../../components/NewsletterBox.astro';
 import ProjectBadge from '../../components/ProjectBadge.astro';
+import UnderConstruction from '../../components/UnderConstruction.astro';
 import MainLayout from '../../layouts/MainLayout.astro';
 
 const posts = (await getCollection('blog'))
@@ -20,7 +21,7 @@ const posts = (await getCollection('blog'))
 				<div>
 					<p class="eyebrow">Arquivo Editorial</p>
 					<h1 class="section-title" style="font-size: clamp(2rem, 3.6vw, 2.7rem);">
-						Todos os Artigos ({posts.length})
+						{posts.length > 0 ? `Todos os Artigos (${posts.length})` : 'Artigos em Construção'}
 					</h1>
 					<p class="section-subtitle">
 						Cada artigo é revisado manualmente, ancorado em fontes primárias e vinculado a uma
@@ -28,40 +29,48 @@ const posts = (await getCollection('blog'))
 					</p>
 				</div>
 
-				<div class="filter-bar" role="group" aria-label="Filtrar arquivo por projeto">
-					<button class="filter-btn is-active" type="button" data-filter="all">Todos</button>
-					<button class="filter-btn" type="button" data-filter="blog-central">Duck AI</button>
-					<button class="filter-btn" type="button" data-filter="ainda-da">Ainda Dá</button>
-					<button class="filter-btn" type="button" data-filter="radar-eleitoral">
-						Radar Eleitoral
-					</button>
-				</div>
-			</div>
-
-			<div id="archive-post-grid" class="post-grid">
 				{
-					posts.map((post) => (
-						<article class="post-card" data-project={post.data.project}>
-							<div>
-								<div class="post-card-meta">
-									<ProjectBadge project={post.data.project} />
-									<FormattedDate date={post.data.pubDate} />
-								</div>
-								<h2 class="post-card-title">
-									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-								</h2>
-								<p class="post-card-desc">{post.data.description}</p>
-							</div>
-							<div class="post-card-footer">
-								<span>{post.data.readingTimeMinutes} min de leitura</span>
-								<a class="read-more" href={`/blog/${post.id}/`}>
-									Ler artigo →
-								</a>
-							</div>
-						</article>
-					))
+					posts.length > 0 && (
+						<div class="filter-bar" role="group" aria-label="Filtrar arquivo por projeto">
+							<button class="filter-btn is-active" type="button" data-filter="all">Todos</button>
+							<button class="filter-btn" type="button" data-filter="blog-central">Duck AI</button>
+							<button class="filter-btn" type="button" data-filter="ainda-da">Ainda Dá</button>
+							<button class="filter-btn" type="button" data-filter="radar-eleitoral">
+								Radar Eleitoral
+							</button>
+						</div>
+					)
 				}
 			</div>
+
+			{
+				posts.length > 0 ? (
+					<div id="archive-post-grid" class="post-grid">
+						{posts.map((post) => (
+							<article class="post-card" data-project={post.data.project}>
+								<div>
+									<div class="post-card-meta">
+										<ProjectBadge project={post.data.project} />
+										<FormattedDate date={post.data.pubDate} />
+									</div>
+									<h2 class="post-card-title">
+										<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+									</h2>
+									<p class="post-card-desc">{post.data.description}</p>
+								</div>
+								<div class="post-card-footer">
+									<span>{post.data.readingTimeMinutes} min de leitura</span>
+									<a class="read-more" href={`/blog/${post.id}/`}>
+										Ler artigo →
+									</a>
+								</div>
+							</article>
+						))}
+					</div>
+				) : (
+					<UnderConstruction />
+				)
+			}
 
 			<div style="margin-top: 3.5rem;">
 				<NewsletterBox idPrefix="blog-nl" />
