@@ -4,7 +4,7 @@ export const SITE_DESCRIPTION =
 	'Estatística, IA e Open Code na prática: bastidores de engenharia, probabilidades no futebol (Ainda Dá) e modelagem eleitoral (Radar Eleitoral) por Vítor Pereira.';
 export const AUTHOR_NAME = 'Vítor Pereira';
 export const BRAND_HANDLE_LABEL = 'Vítor Pereira | Duck AI';
-export const X_PROFILE_URL = 'https://x.com/'; // Atualize com seu @ assim que criar o perfil
+export const X_PROFILE_URL = 'https://x.com/souvitorp';
 export const GITHUB_URL = 'https://github.com/vitorbsp';
 
 // URL do formulário da Brevo / MailerLite (Fase 1 — substituir pelo endpoint real no Passo 4)
@@ -81,9 +81,10 @@ export const PHASE2_ROADMAP: RoadmapProject[] = [
 	},
 	{
 		name: 'Viajador',
-		niche: 'Turismo & Planejamento',
+		niche: 'Turismo & Experiência de Viagem',
 		stage: 'Fase 2 · Conteúdo orgânico & Afiliados',
-		summary: 'Comparativos de rotas, custos e roteiros otimizados para viajantes independentes.',
+		summary:
+			'Experiência completa de viagem no celular: roteiros inteligentes, idiomas e cultura local, GuIA turístico por IA, álbum de lugares e quiz offline.',
 	},
 	{
 		name: 'Paulo Transportes',
