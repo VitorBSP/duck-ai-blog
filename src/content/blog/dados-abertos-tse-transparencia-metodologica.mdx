@@ -1,6 +1,6 @@
 ---
-title: "Dados abertos do TSE e modelagem eleitoral: por que transparência metodológica importa mais do que manchete"
-description: "Como interpretar dados públicos do TSE e do IBGE, por que pesquisas isoladas geram ruído estatístico e os princípios de rigor técnico do Radar Eleitoral."
+title: "Os bastidores técnicos de modelar eleições com dados do TSE"
+description: "Três perrengues reais de engenharia e estatística no Radar Eleitoral: bloqueio 403, integridade de recortes, avaliação sem taxa única e custo zero sob pressão."
 pubDate: 2026-11-25
 project: "radar-eleitoral"
 campaign_id: "2026-11-25-radar-eleitoral-dados-abertos-metodologia"
@@ -9,13 +9,13 @@ readingTimeMinutes: 7
 primarySources:
   - label: "Portal de Dados Abertos do Tribunal Superior Eleitoral (TSE)"
     url: "https://dadosabertos.tse.jus.br/"
-  - label: "Tribunal Superior Eleitoral — Estatísticas e Pesquisas Eleitorais"
+  - label: "Tribunal Superior Eleitoral (Estatísticas e Pesquisas Eleitorais)"
     url: "https://www.tse.jus.br/"
-  - label: "Instituto Brasileiro de Geografia e Estatística (IBGE) — Censo e Demografia"
+  - label: "Instituto Brasileiro de Geografia e Estatística (IBGE)"
     url: "https://www.ibge.gov.br/"
-  - label: "Radar Eleitoral — Plataforma de Modelagem e Dados"
+  - label: "Radar Eleitoral (Plataforma de Modelagem e Dados)"
     url: "https://radar-eleitoral-web-one.vercel.app/"
-methodologyNote: "Este texto tem caráter estritamente técnico, educativo e apartidário. Todos os conceitos estatísticos discutidos baseiam-se em boas práticas de análise de dados públicos e nas bases oficiais do TSE e do IBGE."
+methodologyNote: "Este texto tem caráter estritamente técnico, educativo e apartidário. Todos os dados citados referem-se a bases públicas oficiais do TSE e do IBGE e aos registros metodológicos abertos do Radar Eleitoral."
 ctaLabel: "Explorar dados e modelos no Radar Eleitoral"
 ctaUrl: "https://radar-eleitoral-web-one.vercel.app/"
 draft: true
@@ -25,52 +25,66 @@ import CaixaCTA from '../../components/mdx/CaixaCTA.astro';
 import DestaqueMetrica from '../../components/mdx/DestaqueMetrica.astro';
 import NotaMetodologica from '../../components/mdx/NotaMetodologica.astro';
 
-Em ciclos eleitorais, o volume de números circulando nas redes sociais explode — mas a compreensão estatística quase sempre caminha no sentido oposto. Oscilações dentro da margem de erro viram manchetes definitivas, comparações entre metodologias incompatíveis são tratadas como tendência real e dados públicos auditáveis ficam escondidos atrás de tabelas brutas difíceis de cruzar.
+De tudo o que já construí até hoje, o **[Radar Eleitoral](https://radar-eleitoral-web-one.vercel.app/)** foi o projeto que mais me deu trabalho em volume de dados e engenharia. E também o que mais me ensinou sobre honestidade estatística.
 
-O **[Radar Eleitoral](https://radar-eleitoral-web-one.vercel.app/)** foi criado sob uma premissa direta: **eleições são um problema clássico de engenharia de dados e estatística aplicada**, e a melhor contribuição que a tecnologia pode oferecer ao debate público é rigor metodológico, fontes primárias rastreáveis e neutralidade absoluta.
+O Brasil mantém um dos acervos eleitorais abertos mais detalhados do mundo. No **[Portal de Dados Abertos do TSE](https://dadosabertos.tse.jus.br/)** e no **[IBGE](https://www.ibge.gov.br/)**, qualquer pessoa consegue baixar microdados oficiais sobre candidaturas, perfil do eleitorado, votação, prestação de contas e malha municipal.
+
+O gargalo quase nunca é falta de dado. O problema real começa quando você tenta ingerir centenas de milhares de registros, cruzar bases oficiais sem distorcer nada e publicar tudo com custo zero e transparência total. Quero compartilhar três bastidores reais que moldaram a arquitetura do Radar Eleitoral.
 
 <DestaqueMetrica
   itens={[
-    { valor: "100%", rotulo: "Bases primárias oficiais", nota: "Dados Abertos do TSE, registros oficiais e demografia IBGE" },
-    { valor: "±2 a ±3 p.p.", rotulo: "Margem típica por pesquisa", nota: "Para amostras nacionais de ~1.000 a 2.000 entrevistas" },
-    { valor: "Zero viés", rotulo: "Política editorial técnica", nota: "Análise quantitativa sem adjetivação partidária" },
+    { valor: "117 mil", rotulo: "Candidaturas processadas", nota: "Mais de 153 mil snapshots financeiros em base oficial" },
+    { valor: "5.570", rotulo: "Municípios na malha IBGE", nota: "Cruzamento auditável com chaves oficiais" },
+    { valor: "US$ 0/mês", rotulo: "Infraestrutura gratuita", nota: "Neon Free + Render Free com trava de capacidade" },
   ]}
 />
 
-## O tesouro pouco explorado nos Dados Abertos do TSE
+## 1. O erro 403 do TSE e os 107 recortes que sumiam do ar
 
-O Brasil mantém um dos ecossistemas de dados eleitorais públicos mais detalhados do mundo. No **[Portal de Dados Abertos do TSE](https://dadosabertos.tse.jus.br/)**, qualquer pesquisador, jornalista ou desenvolvedor encontra microdados estruturados sobre:
+O primeiro tropeço aconteceu logo na porta de entrada. Ao automatizar a coleta de arquivos públicos no portal do **[TSE](https://www.tse.jus.br/)**, clientes HTTP padrão passaram a receber bloqueio `403` na borda do servidor.
 
-* **Perfil do eleitorado:** distribuição por município, zona eleitoral, faixa etária, escolaridade e gênero.
-* **Histórico de votação e comparecimento:** séries temporais que permitem estudar abstenção, votos válidos e dinâmica regional ao longo de décadas.
-* **Registros de candidaturas e prestação de contas:** dados padronizados que podem ser cruzados com indicadores socioeconômicos do **[IBGE](https://www.ibge.gov.br/)**.
+A solução técnica combinou duas frentes: um fallback com assinatura TLS compatível (`curl_cffi`) para consultas pontuais e, principalmente, ingestão em lote direto pelos pacotes ZIP oficiais. Menos requisições avulsas, mais previsibilidade e menos estresse na rede.
 
-O desafio raramente é falta de dados — é **padronização, limpeza e contexto**. Sem documentar filtros, anos de referência e chaves de cruzamento entre códigos de município do TSE e do IBGE, qualquer gráfico bonito pode induzir a conclusões equivocadas.
+Só que logo depois apareceu um dilema muito mais interessante do lado estatístico. No começo, eu tinha colocado uma regra rígida no pipeline: um recorte só ia para o ar se atingisse pelo menos 80% de completude. Parecia prudente no papel. Na prática, essa trava escondeu **107 dos 109 recortes de 2026** que estavam sendo atualizados de forma gradual.
 
-## Três erros estatísticos que a modelagem ajuda a corrigir
+A decisão (documentada na `ADR-0002` do projeto) foi separar duas coisas que eu tinha misturado: **integridade e proveniência** de um lado, **completude** do outro. Um dado oficial parcial continua sendo legítimo se você informa claramente qual fatia já chegou. O que nunca pode acontecer é preencher campo ausente (`null`) com zero só para deixar a tabela bonita.
 
-### 1. Confundir erro amostral com mudança real de cenário
-Se um candidato registra 34% em uma semana e 36% na semana seguinte em pesquisas com margem de erro de 2 pontos percentuais para mais ou para menos (nível de confiança de 95%), **não existe evidência estatística de crescimento isolado** — a diferença entre duas amostras independentes tem intervalo de incerteza ainda maior do que a margem de cada pesquisa sozinha.
+## 2. Por que não existe uma "taxa geral de acerto" em eleição
 
-### 2. Tratar uma única pesquisa como verdade absoluta
-Cada instituto adota escolhas legítimas, porém distintas: coleta presencial domiciliar, ponto de fluxo ou telefônica; pesos demográficos calibrados com recortes diferentes; e variações na ordem ou formulação do questionário. Isso gera o que estatísticos chamam de **efeito de casa (*house effect*)** — um deslocamento sistemático que não significa erro intencional, mas distorce a leitura quando olhamos apenas um levantamento isolado.
+Depois da eleição, chega sempre a pergunta mais tentadora: "afinal, qual foi o percentual geral de acerto do modelo?".
 
-Modelos de **agregação temporal** ponderam múltiplas pesquisas registradas conforme tamanho de amostra, recência e histórico de dispersão, reduzindo o ruído de curto prazo e destacando sinais persistentes.
+Na avaliação retrospectiva do Radar Eleitoral (`MODEL_EVALUATION_BIG_NUMBERS_2026-11-05.md`), preferi não publicar um número único de manchete. O motivo é estatístico, não evasivo. Misturar disputas majoritárias (como Governo e Senado) com eleições proporcionais em uma média única cria um indicador sem estimando claro. São regras, escalas e tipos de erro completamente diferentes.
 
-### 3. Ignorar incerteza em gráficos e projeções
-Um número pontual sem intervalo de credibilidade transmite falsa precisão. Na modelagem séria, a **largura da faixa de incerteza** é tão informativa quanto a média estimada — especialmente meses antes da votação, quando o percentual de indecisos e a volatilidade histórica ainda são altos.
+O mesmo rigor valeu para os dados que não fecharam cruzamento perfeito. Entre 866 listas proporcionais avaliadas, **435 ficaram sem join oficial exato** naquela rodada de verificação. Em vez de transformar lacuna em zero ou forçar uma aproximação silenciosa, elas permaneceram explicitamente marcadas como ausentes.
 
-<NotaMetodologica titulo="Nota Metodológica & Fontes Primárias" projeto="Radar Eleitoral">
-  Todo conteúdo do <strong>Radar Eleitoral</strong> segue quatro regras verificáveis: (1) uso exclusivo de fontes primárias oficiais (<code>tse.jus.br</code>, <code>dadosabertos.tse.jus.br</code>, <code>ibge.gov.br</code>, Congresso Nacional e relatórios técnicos do próprio Radar); (2) separação explícita entre dado observado e estimativa de modelo; (3) comunicação clara de incerteza e limitações metodológicas; e (4) revisão humana obrigatória antes de qualquer publicação.
+Para evitar qualquer publicação acidental sem conferência, o fluxo também exige recibos criptográficos `SHA-256` nos artefatos de avaliação. Sem conferência e aprovação explícita, o resultado não sobe.
+
+## 3. Custo zero sob pressão (e uma trava em 200 MiB salvando o banco)
+
+Rodar 117 mil candidaturas, mais de 153 mil snapshots financeiros e a malha geográfica de 5.570 municípios em camadas gratuitas (Neon Free e Render Free) obriga a respeitar cada megabyte.
+
+Dois episódios de oficina deixaram marcas boas no código:
+
+* **O bug de quebra de linha no Windows (PR #48):** a verificação de integridade da malha municipal começou a falhar de repente em checkouts locais no Windows. O culpado era clássico: conversão automática entre `LF` e `CRLF` alterando o hash do arquivo sem mudar uma única coordenada. Tratar normalização de fim de linha resolveu o falso alarme.
+* **A trava de 200 MiB antes do estouro:** em um dos ciclos de atualização, o consumo do banco gratuito bateu 210 MiB. Em vez de deixar o agendador automático derrubar o ambiente, um *capacity gate* configurado em 200 MiB travou o cron a tempo e avisou antes de qualquer perda de serviço.
+
+## Como ler dados eleitorais sem cair em ruído
+
+Além da engenharia, o Radar Eleitoral existe para ajudar o leitor a separar três camadas que costumam aparecer misturadas no debate público:
+
+1. **Dado oficial observado:** números auditáveis vindos direto de bases públicas do TSE e do IBGE, com data e filtro registrados.
+2. **Estimativa de modelo:** agregações ou projeções construídas sobre pesquisas e históricos. Cada instituto tem escolhas metodológicas próprias (coleta presencial, telefônica, ponderação), o que gera diferenças sistemáticas conhecidas na estatística como efeito de casa (*house effect*).
+3. **Margem de incerteza:** uma pesquisa nacional típica tem margem de erro em torno de 2 a 3 pontos percentuais. Uma variação isolada de 34% para 36% entre semanas, sozinha, não prova mudança real de tendência.
+
+<NotaMetodologica titulo="Nota Metodológica e Fontes Primárias" projeto="Radar Eleitoral">
+  Todo conteúdo do <strong>Radar Eleitoral</strong> segue quatro regras verificáveis: (1) uso exclusivo de fontes primárias oficiais (<code>tse.jus.br</code>, <code>dadosabertos.tse.jus.br</code>, <code>ibge.gov.br</code>, Congresso Nacional e relatórios técnicos do próprio Radar); (2) separação explícita entre dado observado e estimativa de modelo; (3) comunicação clara de incerteza e limitações; e (4) revisão humana obrigatória antes de qualquer publicação.
 </NotaMetodologica>
 
-## Como estamos construindo o Radar Eleitoral em público
-
-Nos próximos artigos técnicos, vamos abrir estudos reproduzíveis sobre estrutura do eleitorado brasileiro, comportamento histórico de abstenção por região e boas práticas de agregação estatística — sempre acompanhados do link direto para as bases oficiais utilizadas.
+Nos próximos artigos técnicos dessa editoria, vou abrir análises reproduzíveis sobre perfil do eleitorado, abstenção histórica por região e cuidados na agregação de séries temporais, sempre com o link direto para as bases oficiais.
 
 <CaixaCTA
   titulo="Explore os painéis e modelos do Radar Eleitoral"
-  descricao="Consulte visualizações baseadas em dados públicos oficiais e acompanhe a evolução dos modelos estatísticos."
+  descricao="Consulte visualizações construídas sobre dados públicos oficiais e acompanhe a metodologia aberta do projeto."
   rotuloBotao="Acessar o Radar Eleitoral"
   url="https://radar-eleitoral-web-one.vercel.app/"
   campaignId="2026-11-25-radar-eleitoral-dados-abertos-metodologia"
