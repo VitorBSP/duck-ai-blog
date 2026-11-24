@@ -1,6 +1,6 @@
 ---
-title: "Por que criei a Duck AI — e como montamos uma operação de agentes com custo extra zero"
-description: "Os bastidores da arquitetura híbrida da Duck AI: OpenBot local, GitHub Actions, Gemini Free, Claude Routines, Buffer Free e contratos de concorrência no Git."
+title: "Por que criei a Duck AI (e o dia em que os tokens estouraram)"
+description: "O propósito real por trás da Duck AI: aprender na prática, tirar ideias antigas do papel, alertar sobre senso crítico na IA e montar uma operação enxuta sem custo extra."
 pubDate: 2026-11-23
 project: "blog-central"
 campaign_id: "2026-11-23-blog-central-arquitetura-duck-ai"
@@ -9,9 +9,9 @@ readingTimeMinutes: 6
 primarySources:
   - label: "Documentação da GraphQL API do Buffer"
     url: "https://developers.buffer.com/guides/introduction.html"
-  - label: "Google AI Studio — Gemini API Free Tier"
+  - label: "Google AI Studio (Gemini API Free Tier)"
     url: "https://aistudio.google.com/docs/pricing"
-methodologyNote: "Arquitetura desenhada para manter custo marginal em R$ 0/mês na Fase 1, utilizando apenas assinaturas já existentes (Claude, Gemini e ChatGPT) somadas a ferramentas open-source e camadas gratuitas."
+methodologyNote: "Arquitetura desenhada para manter custo marginal em R$ 0/mês na Fase 1, combinando assinaturas pessoais já existentes com ferramentas open-source e camadas gratuitas."
 ctaLabel: "Conhecer os projetos ativos da Duck AI"
 ctaUrl: "https://duck-ai-blog.pages.dev/projetos"
 draft: true
@@ -21,80 +21,76 @@ import CaixaCTA from '../../components/mdx/CaixaCTA.astro';
 import DestaqueMetrica from '../../components/mdx/DestaqueMetrica.astro';
 import NotaMetodologica from '../../components/mdx/NotaMetodologica.astro';
 
-Quem constrói vários projetos independentes esbarra cedo ou tarde no mesmo gargalo: **o produto sai do papel, mas ninguém descobre que ele existe.**
+Todo mundo que gosta de programar e brincar com dados tem uma pasta cheia de ideias pela metade. Comigo não era diferente.
 
-Nos últimos meses, fui acumulando projetos voltados a dados, estatística e ferramentas práticas — entre eles o **[Ainda Dá](https://vitorbsp.github.io/aindada/)**, que calcula probabilidades no futebol, e o **[Radar Eleitoral](https://radar-eleitoral-web-one.vercel.app/)**, dedicado a modelagem e dados eleitorais. A **Duck AI** nasce como o guarda-chuva técnico desses experimentos: um laboratório de engenharia de software, modelagem quantitativa e IA aplicada, construído em público.
+Eu sempre tive projetos engavetados sobre futebol, dados públicos, viagens e estatística aplicada. Alguns viravam um script no fim de semana e morriam ali. Outros nem saíam do caderno por falta de braço para construir frontend, backend, automação e texto ao mesmo tempo.
 
-Antes de sair assinando mais uma plataforma cara de agentes autônomos na nuvem, fizemos uma pergunta simples: **dá para montar um time enxuto de trabalhadores de IA para pesquisar tendências, escrever artigos, preparar posts no X e medir monetização gastando R$ 0 extras por mês?**
+A **Duck AI** nasceu no momento em que a inteligência artificial mudou essa equação. Mas não criei esse laboratório só para montar um fluxograma bonito de agentes. Criei por um motivo bem mais simples: continuar aprendendo na prática, tirar ideias antigas do papel e dividir esse processo com quem também curte construir coisas úteis.
 
-A resposta curta é **sim** — desde que você trate automação de conteúdo como engenharia de sistemas, e não como "mágica de prompt".
+## O lado mágico da IA (e o alerta que eu não quero esquecer)
+
+Eu ainda me encanto com o que a IA faz hoje. Ver uma ideia que estava parada há anos ganhar tela, modelo estatístico e deploy funcional em dias tem algo de mágico. Ela entrega velocidade, qualidade e uma visão de futuro que muda completamente o que uma pessoa sozinha consegue construir.
+
+Só que existe um outro lado dessa moeda. E eu quero falar dele com a mesma frequência com que falo de código.
+
+Quanto mais fácil fica gerar texto, gráfico e software com um clique, maior o risco de a gente perder o **senso crítico**. Se você aceita a primeira resposta do modelo sem questionar o dado, o método ou o impacto daquilo, começa a abrir mão justamente do que nos faz humanos: criatividade, liberdade de pensamento e capacidade real de inovar.
+
+Por isso a Duck AI existe como espaço de troca com a comunidade. Quero mostrar como usar IA para construir projetos reais, mas sem vender ilusão de piloto automático.
+
+## O dia em que os tokens estouraram
+
+Quando decidi organizar a operação da Duck AI para manter o blog e os projetos andando com custo extra zero, fiz o erro clássico de quem se empolga demais no começo.
+
+Nos primeiros testes com agentes, eu queria automatizar tudo de uma vez. Coloquei rotinas para ler muita coisa, cruzar contexto longo demais e revisar o próprio trabalho em ciclos seguidos. O resultado veio rápido: os tokens estouraram antes mesmo de sair um único texto decente.
+
+Foi um balde de água fria necessário. Ali ficou claro que empilhar agente sem limite não é engenharia. É desperdício de cota e receita certa para gerar texto genérico com cara de robô.
+
+A virada veio quando cortei o excesso e passei a tratar a operação como um sistema enxuto de verdade.
 
 <DestaqueMetrica
   itens={[
-    { valor: "R$ 0", rotulo: "Custo mensal adicional", nota: "Fase 1 sobre cotas gratuitas e assinaturas já pagas" },
-    { valor: "3 agentes", rotulo: "Papéis especializados", nota: "Radar (PC + Nuvem), Editor (Blog + X) e Growth" },
-    { valor: "< 1h/sem", rotulo: "Meta de revisão humana", nota: "Aprovação via Pull Request + Drafts no Buffer" },
+    { valor: "R$ 0", rotulo: "Custo mensal adicional", nota: "Fase 1 sobre cotas gratuitas e assinaturas que eu já usava" },
+    { valor: "2 projetos", rotulo: "Foco da Fase 1", nota: "Ainda Dá e Radar Eleitoral na esteira inicial" },
+    { valor: "< 1h/sem", rotulo: "Meta de revisão humana", nota: "Tudo passa por revisão minha antes de ir ao ar" },
   ]}
 />
 
-## O primeiro corte: foco em 1 perfil e 2 produtos
+## Foco antes de escala: 1 perfil e 2 produtos
 
-O erro mais comum ao automatizar marketing de portfólio é abrir seis contas diferentes no X, um blog genérico falando de tudo e tentar escalar todos os projetos ao mesmo tempo. No Dia 1, isso só divide audiência e multiplica trabalho de moderação.
+O segundo ajuste foi segurar a ansiedade de anunciar tudo ao mesmo tempo. Em vez de abrir seis perfis diferentes e dividir atenção, concentrei tudo em uma casa só.
 
-Na Fase 1 (piloto de 30 dias), travamos três decisões:
+Na Fase 1 (um piloto de 30 dias), travei três regras práticas:
 
-1. **Um único perfil no X (`Vítor Pereira | Duck AI`):** pessoas seguem pessoas. Centralizar bastidores de engenharia, probabilidades do *Ainda Dá* e metodologia de dados do *Radar Eleitoral* em uma narrativa coerente acelera a construção de audiência.
-2. **Dois produtos prioritários:** apenas *Ainda Dá* e *Radar Eleitoral* entram na esteira inicial. Projetos da Fase 2 (*Robô do Cartola*, *Atlas do Estudo*, *Viajador*, *Paulo Transportes*) ficam apenas no radar de oportunidades.
-3. **Nenhuma publicação sem revisão humana:** todo artigo nasce como Pull Request com preview na Cloudflare Pages, e todo post no X nasce como rascunho no Buffer.
+1. **Um único perfil no X (`Vítor Pereira | Duck AI`):** pessoas acompanham pessoas, não logotipos anônimos. Juntar bastidores de engenharia, probabilidades do **[Ainda Dá](https://vitorbsp.github.io/aindada/)** e transparência de dados no **[Radar Eleitoral](https://radar-eleitoral-web-one.vercel.app/)** cria uma conversa coerente.
+2. **Dois produtos no ar primeiro:** *Ainda Dá* e *Radar Eleitoral* puxam a fila. Outras ideias da bancada (como o *Viajador* e o *Robô do Cartola*) seguem em construção, sem promessa apressada.
+3. **Nenhuma publicação no piloto automático:** todo artigo nasce como rascunho em Pull Request e todo post social nasce como rascunho para revisão humana.
 
-## Por que um repositório Git substitui um banco de dados no Dia 1
+## Arquitetura enxuta, sem banco caro no Dia 1
 
-Em vez de subir PostgreSQL, filas distribuídas e painéis administrativos antes de validar o primeiro funil de leads, usamos um repositório privado no GitHub (`cerebro-operacao`) como **memória compartilhada** entre os agentes.
+Em vez de pagar servidor dedicado ou banco gerenciado antes de validar se alguém realmente lê o blog, usei o próprio Git como memória compartilhada da operação.
 
-Mas existe uma armadilha clássica quando múltiplos agentes escrevem no mesmo repositório: **condição de corrida**. Se o agente local (olhando o X no meu PC) e o coletor na nuvem (lendo RSS no GitHub Actions) tentam editar a mesma fila `fila_aprovada.json` ao mesmo tempo, um sobrescreve o trabalho do outro.
+A lógica em alto nível é simples. Cada rotina de coleta ou pesquisa grava apenas arquivos novos e pequenos, com escopo bem fechado para não queimar contexto à toa. Depois, uma única rotina consolidada organiza a fila e evita que dois processos sobrescrevam o mesmo arquivo ao mesmo tempo.
 
-A solução veio da engenharia de sistemas distribuídos aplicada de forma minimalista:
+Na hora de publicar, existe uma trava dupla. Primeiro, eu reviso o texto no Pull Request e só faço o merge quando o artigo passa no nosso linter editorial (que barra travessões, tiques de IA e parágrafos gigantes). Depois do deploy, uma verificação automática confirma que a página está realmente respondendo `HTTP 200` no ar antes de preparar qualquer rascunho social no Buffer.
 
-```text
-OpenBot (PC)       ──▶ grava JSON imutável em intel/inbox/x/<timestamp>-<uuid>.json
-Coletor Web (CI)   ──▶ grava JSON imutável em intel/inbox/web/<timestamp>-<uuid>.json
-                                  │
-                                  ▼
-Consolidador (Single-Writer com concurrency: cerebro-writer)
-  • deduplica URLs (limpando parâmetros UTM)
-  • atualiza pautas/fila_aprovada.json e intel/banco_de_ideias.md
-  • move arquivos processados para intel/archive/
-```
-
-Cada coletor só cria arquivos novos e imutáveis. Apenas **um** workflow serializado tem permissão para atualizar o estado canônico. Conflito de merge cai para zero.
-
-## Trava dupla na distribuição: HTTP 200 + `saveToDraft: true`
-
-Outro risco silencioso em automações de conteúdo é o descompasso entre o blog e a rede social: um bot agenda o post no X apontando para um artigo que ainda não passou por revisão — ou pior, cujo deploy nem terminou (levando o leitor a um erro 404).
-
-Separamos a máquina de estados em duas camadas ligadas por um mesmo `campaign_id`:
-
-1. **Estado do artigo (`draft_pr` → `merged` → `deployed_200`):** o Editor abre o Pull Request contendo o texto em MDX e o JSON dos posts sociais. Eu reviso artigo e threads juntos no mesmo lugar.
-2. **Estado social (`pending_article` → `draft_in_buffer` → `scheduled_by_human`):** somente **depois** do merge *e* da confirmação automática de que a URL canônica retornou `HTTP 200` com o marcador esperado no HTML, um script Python determinístico chama a GraphQL API do Buffer Free.
-
-<NotaMetodologica titulo="Invariante de Segurança no Buffer" projeto="Duck AI">
-  O agente de IA <strong>nunca</strong> recebe acesso direto à chave de escrita do Buffer. Quem chama a API é um script determinístico onde <code>saveToDraft: true</code> está fixado em código e protegido por <code>idempotency_key</code>. Mesmo em caso de re-execução, nenhum rascunho é duplicado e nenhum post sai sem agendamento humano explícito.
+<NotaMetodologica titulo="Trava de Segurança na Publicação" projeto="Duck AI">
+  Nenhum agente tem permissão para publicar direto no blog ou nas redes sociais. A geração de rascunhos sociais usa um script determinístico que salva tudo como rascunho (<code>saveToDraft: true</code>) e evita duplicações. Sem revisão e clique meu, nada sai.
 </NotaMetodologica>
 
-## O que vamos medir nos próximos 30 dias
+## O que vou acompanhar nos próximos 30 dias
 
-Quantidade de posts publicados é métrica de vaidade. Toda sexta-feira, o agente de Growth avalia apenas quatro indicadores por projeto:
+Contar quantos artigos foram publicados não diz quase nada. O que eu quero medir de verdade neste primeiro mês cabe em quatro perguntas:
 
-* Cliques com parâmetros UTM saindo dos artigos para o **Ainda Dá** e o **Radar Eleitoral**.
-* Novos inscritos na newsletter e no boletim técnico.
-* Taxa de Pull Requests aprovados sem precisar reescrever metade do texto.
-* Tempo humano semanal gasto na revisão (teto rígido de 1 hora).
+* Quantas pessoas saem dos textos para testar o **Ainda Dá** e o **Radar Eleitoral**?
+* O conteúdo gera conversa útil na comunidade e novos inscritos no boletim?
+* Quantos rascunhos chegam prontos para revisão sem eu precisar reescrever metade?
+* Eu consigo manter tudo dentro do teto de uma hora por semana de revisão?
 
-Nos próximos artigos aqui da Duck AI, vou abrir a matemática por trás das simulações do *Ainda Dá*, a transparência metodológica sobre dados do TSE no *Radar Eleitoral* e os números reais — bons ou ruins — desse experimento.
+Nos próximos textos, vou abrir como a matemática do *Ainda Dá* calcula chances no futebol e contar os bastidores técnicos do *Radar Eleitoral* com dados do TSE. E vou voltar aqui para mostrar os números reais desse experimento, sejam eles bons ou ruins.
 
 <CaixaCTA
   titulo="Explore os modelos ativos da Duck AI"
-  descricao="Veja as ferramentas já no ar (Ainda Dá e Radar Eleitoral) e o mapa de experimentos da Fase 2."
+  descricao="Veja as ferramentas já no ar (Ainda Dá e Radar Eleitoral) e acompanhe o que está saindo da bancada."
   rotuloBotao="Ver projetos ativos"
   url="https://duck-ai-blog.pages.dev/projetos"
   campaignId="2026-11-23-blog-central-arquitetura-duck-ai"

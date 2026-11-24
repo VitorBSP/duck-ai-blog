@@ -1,17 +1,19 @@
 ---
-title: "Como a matemática calcula se 'ainda dá' no futebol: bastidores da modelagem probabilística"
-description: "Por que a intuição falha na reta final do campeonato e como simulações de Monte Carlo e distribuição de gols estimam chances reais de título e rebaixamento."
+title: "Ainda dá mesmo? Como a matemática calcula chances no futebol"
+description: "Como o sofrimento colorado e a Copa de 2026 deram origem ao Ainda Dá, e como simulações de computador trocam achismo de tabela por probabilidades reais."
 pubDate: 2026-11-24
 project: "ainda-da"
 campaign_id: "2026-11-24-ainda-da-matematica-probabilidades"
 tags: ["ainda-da", "probabilidades", "futebol", "monte-carlo"]
 readingTimeMinutes: 7
 primarySources:
-  - label: "Ainda Dá — Calculadora de Probabilidades de Futebol"
+  - label: "Ainda Dá (Calculadora de Probabilidades de Futebol)"
     url: "https://vitorbsp.github.io/aindada/"
+  - label: "WC_26_Predictins (Modelo aberto da Copa do Mundo de 2026)"
+    url: "https://github.com/VitorBSP/WC_26_Predictins"
   - label: "Tabela Oficial do Campeonato Brasileiro (CBF)"
     url: "https://www.cbf.com.br/"
-methodologyNote: "As probabilidades discutidas neste artigo referem-se a modelos estatísticos baseados em desempenho histórico, mando de campo e tabela restante. Modelos probabilísticos expressam incerteza e não constituem garantia de resultado nem recomendação de apostas."
+methodologyNote: "As probabilidades discutidas neste artigo vêm de modelos estatísticos baseados em histórico recente, mando de campo e tabela restante. Probabilidade mede incerteza e não é garantia de resultado nem recomendação de aposta."
 ctaLabel: "Simular as chances do seu time no Ainda Dá"
 ctaUrl: "https://vitorbsp.github.io/aindada/"
 draft: true
@@ -21,71 +23,82 @@ import CaixaCTA from '../../components/mdx/CaixaCTA.astro';
 import DestaqueMetrica from '../../components/mdx/DestaqueMetrica.astro';
 import NotaMetodologica from '../../components/mdx/NotaMetodologica.astro';
 
-Toda reta final de campeonato repete a mesma cena: faltam seis ou sete rodadas, um time está a cinco pontos do objetivo e o debate se divide entre o otimismo cego (*"basta ganhar as próximas quatro"*) e o fatalismo prematuro (*"já acabou"*).
+Ser colorado nos últimos anos é fazer curso intensivo de conta de padaria. Faltam seis rodadas para acabar o Brasileirão e o Inter está a quatro ou cinco pontos do objetivo. Na hora, o grupo da família se divide: quem garante que "se ganhar as próximas quatro, chega" e quem jura que "já acabou tudo".
 
-Foi exatamente para trocar achismo por conta clara que nasceu o **[Ainda Dá](https://vitorbsp.github.io/aindada/)**. Em vez de olhar apenas para a distância em pontos na tabela de hoje, um modelo probabilístico faz uma pergunta muito mais rica: **entre dezenas de milhares de futuros possíveis para os jogos que faltam, em que fração deles o seu time chega lá?**
+Eu sou estatístico e torcedor do Internacional. O **[Ainda Dá](https://vitorbsp.github.io/aindada/)** nasceu exatamente dessa mistura: a vontade de colocar o sofrimento recente do colorado em números claros, sem depender de achismo de mesa de bar.
 
-## Por que olhar só para a tabela atual engana
+O empurrão final veio logo depois da **Copa do Mundo de 2026**. No meu modelo aberto de previsões do torneio ([WC_26_Predictins](https://github.com/VitorBSP/WC_26_Predictins)), a conta acertou 4 das 5 melhores seleções e cravou o 1º e o 2º colocados. Ali eu pensei: se isso funcionou bem na Copa, por que não montar uma calculadora aberta para o Brasileirão e deixar qualquer torcedor testar os cenários do próprio time?
 
-Três fatores tornam a intuição humana péssima para estimar chances em campeonatos de pontos corridos:
+## Por que a tabela de hoje engana tanto
 
-1. **Confrontos diretos criam correlação:** quando o 16º enfrenta o 17º na penúltima rodada, os dois não podem somar três pontos ao mesmo tempo. Contar "quantos pontos faltam" olhando só para o calendário de um clube ignora que os rivais tiram pontos uns dos outros.
-2. **A força do calendário restante pesa mais do que parece:** estar 2 pontos atrás pegando adversários da parte de baixo em casa pode representar uma probabilidade maior de classificação do que estar 2 pontos à frente enfrentando líderes fora.
-3. **O "número mágico" dos 45 pontos não é fixo:** 45 pontos funcionam como regra prática histórica para escapar do rebaixamento em ligas de 20 clubes e 38 rodadas, mas a linha de corte real oscila ano a ano conforme a dispersão da tabela — há edições em que 41 bastam e outras em que 45 não garantem permanência.
+Nossa cabeça é ótima para torcer e péssima para calcular combinações. Quando olhamos só para a classificação atual, três armadilhas distorcem a leitura:
+
+1. **Rivais tiram pontos uns dos outros:** se o 16º enfrenta o 17º na penúltima rodada, os dois não podem somar três pontos ao mesmo tempo. Olhar só para o calendário do seu clube ignora esses confrontos diretos.
+
+2. **O peso do calendário muda tudo:** estar 2 pontos atrás pegando times da parte de baixo em casa pode dar mais chance de vaga do que estar 2 pontos na frente enfrentando líderes fora.
+
+3. **Os 45 pontos não são lei da física:** a fama dos 45 pontos para escapar do Z-4 vem da média histórica em ligas de 20 times. Na prática, a linha de corte muda todo ano. Já teve campeonato em que 41 pontos salvaram e outros em que 45 não bastaram.
 
 <DestaqueMetrica
   itens={[
-    { valor: "380 jogos", rotulo: "Grade completa de 20 times", nota: "Combinações exponenciais impossíveis de listar na mão" },
-    { valor: "10.000+", rotulo: "Simulações de Monte Carlo", nota: "Cada rodada restante sorteada conforme a força das equipes" },
-    { valor: "Mando + Força", rotulo: "Variáveis-chave por partida", nota: "Ataque, defesa e vantagem histórica do mandante" },
+    { valor: "380 jogos", rotulo: "Campeonato completo", nota: "Combinações demais para calcular no papel" },
+    { valor: "10.000+", rotulo: "Temporadas simuladas", nota: "Cada rodada restante sorteada milhares de vezes" },
+    { valor: "Mando + Força", rotulo: "Base de cada partida", nota: "Ataque, defesa e peso real de jogar em casa" },
   ]}
 />
 
-## Como funciona o motor de probabilidades por baixo dos panos
+## Jogar o resto do campeonato 10 mil vezes
 
-Embora existam variações mais sofisticadas, a espinha dorsal da modelagem probabilística no futebol combina três blocos clássicos:
+Imagine que faltam 60 jogos para o Brasileirão terminar. Cada partida tem três desfechos possíveis: vitória do mandante, empate ou vitória do visitante. O total de finais diferentes passa de `3` elevado a `60`. É um número maior do que a quantidade de átomos na Terra. Não dá para listar tudo na mão.
 
-### 1. Estimar a taxa esperada de gols de cada confronto
-Gols no futebol são eventos relativamente raros e discretos. Por isso, modelos baseados na **distribuição de Poisson** (e extensões como Dixon-Coles, que corrigem empates de placar baixo como `0x0` e `1x1`) funcionam surpreendentemente bem como linha de base.
+A saída é bem intuitiva. Se você pudesse pegar a tabela de hoje e jogar as rodadas restantes **10 mil vezes seguidas** no computador, em quantas dessas versões o seu time escaparia do rebaixamento? Ou pegaria G-4?
 
-Para uma partida entre mandante <strong>A</strong> e visitante <strong>B</strong>, estimamos a expectativa de gols (<code>λA</code> e <code>λB</code>) combinando:
-* Capacidade ofensiva do time A frente à média da liga.
-* Solidez defensiva do time B frente à média da liga.
-* Fator de **mando de campo**, historicamente significativo no futebol brasileiro.
+Na estatística, essa ideia de repetir o campeonato milhares de vezes sorteando cada jogo conforme a força dos times tem nome chique: **simulação de Monte Carlo**.
 
-Com <code>λA</code> e <code>λB</code>, obtemos a matriz de probabilidades de cada placar possível (`0x0`, `1x0`, `2x1`, etc.) — e, somando as células, as chances de **vitória do mandante**, **empate** ou **vitória do visitante**.
+Funciona em dois passos simples. Primeiro, o modelo estima a chance de cada resultado em cada partida que falta, levando em conta quanto cada time costuma marcar, quanto costuma sofrer e o peso de jogar em casa. Depois, o computador sorteia todos os jogos restantes, aplica as regras reais de desempate (pontos, vitórias e saldo de gols) e anota a classificação final.
 
-### 2. Simular o resto do campeonato milhares de vezes (Monte Carlo)
-Calcular analiticamente todas as combinações de 60 jogos restantes exigiria explorar 3<sup>60</sup> cenários — um número maior do que a quantidade de átomos na Terra.
+Repita isso 10 mil vezes. Se o seu time terminou no G-4 em 2.300 dessas simulações, a estimativa é de 23% de chance. Simples assim.
 
-A saída elegante é o **método de Monte Carlo**:
+## O que 70% de chance realmente quer dizer
+
+Aqui mora a confusão mais comum no futebol. Muita gente olha para um jogo com 70% de chance de vitória do mandante, vê o visitante ganhar de 1 a 0 e conclui: "o modelo errou tudo".
+
+Não errou. Dizer que um time tem 70% de chance significa que, em 10 jogos parecidos, ele vence cerca de 7 e tropeça em 3. A zebra faz parte da conta.
+
+O mesmo vale para aquela chance pequena na reta final. Quando o simulador mostra 15% de chance de classificação, isso quer dizer que, a cada 7 campeonatos parecidos, o milagre acontece em cerca de 1. É difícil, claro, mas está longe de ser impossível.
+
+## Testar "e se a gente ganhar domingo?"
+
+Mais útil do que ler um percentual parado na tela é ver como um único resultado mexe na tabela inteira. No **Ainda Dá**, quando você trava o placar de um confronto direto (por exemplo, "e se meu time vencer fora de casa domingo?"), o motor recalcula os milhares de futuros na hora.
+
+Em rodadas finais, um único jogo de seis pontos chega a deslocar a chance de um clube em mais de 20 pontos percentuais. É aí que a matemática conversa direto com a arquibancada.
+
+## Para quem quer ver a conta
+
+Se você é da área de dados ou gosta de abrir o capô do modelo, a espinha dorsal funciona assim:
+
+* **Gols esperados por partida:** gols no futebol são eventos raros e discretos. Por isso, a **distribuição de Poisson** (com extensões como **Dixon-Coles**, que corrigem a frequência real de empates de placar baixo como `0x0` e `1x1`) serve muito bem como linha de base.
+* **Força relativa e mando:** para cada confronto entre mandante `A` e visitante `B`, o modelo estima as taxas esperadas de gol (`λA` e `λB`) combinando força ofensiva, solidez defensiva em relação à média da liga e o fator de mando de campo.
+* **Da matriz de placares ao campeonato inteiro:** a partir de `λA` e `λB`, calculamos a probabilidade de cada placar (`0x0`, `1x0`, `2x1` e assim por diante) e somamos os resultados para chegar às chances de vitória, empate e derrota. Depois, o laço de Monte Carlo sorteia o resto do calendário:
 
 ```python
-# Visão simplificada do ciclo de simulação de uma temporada restante
-for simulacao in range(N_SIMULACOES):
+for _ in range(N_SIMULACOES):
     tabela = copiar_tabela_atual()
     for jogo in jogos_restantes:
-        resultado = sortear_resultado(jogo.prob_mandante, jogo.prob_empate, jogo.prob_visitante)
+        resultado = sortear_resultado(jogo.p_mandante, jogo.p_empate, jogo.p_visitante)
         atualizar_pontos_e_criterios(tabela, jogo, resultado)
     registrar_posicoes_finais(tabela)
 ```
 
-Ao repetir esse sorteio milhares de vezes aplicando as regras reais de desempate (pontos, vitórias, saldo de gols), a fração de universos simulados em que o time termina em 1º, no G-4 ou no Z-4 converge para a probabilidade estimada.
-
-### 3. O valor do simulador interativo ("e se ganharmos domingo?")
-Mais útil do que ler um percentual estático no jornal é testar **sensibilidade**. Quando você fixa um único resultado — por exemplo, *"e se o meu time vencer o confronto direto fora de casa?"* — o modelo recalcula instantaneamente a nova distribuição de futuros. Muitas vezes, um único jogo de seis pontos desloca a probabilidade de um clube em mais de 20 pontos percentuais.
-
-<NotaMetodologica titulo="Nota Metodológica & Limites do Modelo" projeto="Ainda Dá">
-  Modelos quantitativos capturam tendências estruturais, mas não leem o vestiário: lesões de última hora, trocas abruptas de técnico, gramado encharcado ou desgaste de viagem podem alterar o desempenho real de uma partida específica. Por isso, probabilidades no <strong>Ainda Dá</strong> devem ser lidas como <em>distribuições de cenários</em> — nunca como certeza ou promessa de aposta.
+<NotaMetodologica titulo="Limites Honestos do Modelo" projeto="Ainda Dá">
+  Modelos estatísticos capturam tendências estruturais, mas não entram no vestiário. Uma expulsão aos 10 minutos, uma lesão no aquecimento, troca de técnico ou gramado encharcado mudam qualquer partida. Por isso, leia os números do <strong>Ainda Dá</strong> como cenários de probabilidade, nunca como certeza ou dica de aposta.
 </NotaMetodologica>
 
-## O que vem pela frente no Ainda Dá
-
-Nos próximos ciclos da Duck AI, vamos publicar análises pós-rodada comparando o que o modelo projetava antes dos jogos com o que aconteceu em campo — avaliando inclusive a **calibração** das previsões (*quando o modelo diz 70%, o evento acontece perto de 70% das vezes?*). Transparência de acerto e erro é o que separa modelagem séria de palpite com cara de planilha.
+Nos próximos ciclos aqui da Duck AI, quero acompanhar também a **calibração** do modelo pós-rodada: quando o simulador diz 70%, o evento acontece perto de 70% das vezes na vida real? Mostrar onde o modelo acerta e onde ele escorrega faz parte da graça.
 
 <CaixaCTA
   titulo="Teste os cenários do seu time agora"
-  descricao="Acesse o Ainda Dá, simule os próximos resultados da tabela e veja na hora como mudam as probabilidades."
+  descricao="Abra o Ainda Dá, simule os próximos resultados da tabela e veja na hora quanto muda a chance do seu clube."
   rotuloBotao="Abrir o Ainda Dá"
   url="https://vitorbsp.github.io/aindada/"
   campaignId="2026-11-24-ainda-da-matematica-probabilidades"

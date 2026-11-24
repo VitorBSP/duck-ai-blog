@@ -1,12 +1,12 @@
 ---
 import NewsletterBox from '../components/NewsletterBox.astro';
 import MainLayout from '../layouts/MainLayout.astro';
-import { AUTHOR_NAME, BRAND_HANDLE_LABEL, GITHUB_URL } from '../consts';
+import { AUTHOR_NAME, BRAND_HANDLE_LABEL, GITHUB_URL, X_PROFILE_URL } from '../consts';
 ---
 
 <MainLayout
 	title="Sobre"
-	description="Conheça a Duck AI e os princípios editoriais e metodológicos de Vítor Pereira em Estatística, IA e Open Code."
+	description="Conheça Vítor Pereira, a origem do nome Duck AI e os princípios editoriais e metodológicos por trás dos projetos em Estatística, IA e Open Code."
 >
 	<article class="article-shell">
 		<div class="container-narrow">
@@ -14,47 +14,118 @@ import { AUTHOR_NAME, BRAND_HANDLE_LABEL, GITHUB_URL } from '../consts';
 				<p class="eyebrow">Estatística · IA · Open Code</p>
 				<h1 class="article-title">Sobre a Duck AI</h1>
 				<p class="article-lead">
-					A <strong>Duck AI</strong> é o laboratório independente de <strong>{AUTHOR_NAME}</strong>{' '}
-					dedicado a transformar estatística, IA e open code em produtos reais — construídos e
-					documentados em público.
+					A <strong>Duck AI</strong> (ou <strong>Duck AI Labs</strong>) é o laboratório pessoal e
+					independente de <strong>{AUTHOR_NAME}</strong>. Aqui eu transformo estatística,
+					inteligência artificial e código aberto em produtos reais, documentando em público o que
+					funciona e o que quebra no caminho.
 				</p>
 			</header>
 
 			<div class="prose">
-				<h2>Por que um fio condutor de dados e transparência?</h2>
+				<h2>Quem está por trás do teclado</h2>
 				<p>
-					Ao criar projetos em áreas aparentemente distantes — futebol no <strong>Ainda Dá</strong> e
-					estatística pública no <strong>Radar Eleitoral</strong> — ficou claro que todos compartilham
-					o mesmo núcleo: <em>lidar honestamente com incerteza usando engenharia limpa e dados
-					verificáveis</em>.
+					Sou bacharel em Estatística, técnico em Informática para Internet e mestrando em Ciência
+					da Computação. No dia a dia, trabalho como cientista de dados no Bradesco.
+				</p>
+				<p>
+					Um aviso importante logo de cara: a Duck AI Labs é um projeto 100% pessoal e
+					independente. Tudo o que publico por aqui (código, modelos, textos e opiniões) é de minha
+					responsabilidade exclusiva e não representa o Bradesco nem tem vínculo institucional com o
+					banco.
+				</p>
+				<p>
+					Fora do terminal, sou apaixonado por esportes. Acompanho futebol de perto como torcedor
+					colorado, curto e-sports (especialmente League of Legends) e jogo padel. Também gosto
+					muito de geografia e de viajar, o que acaba transbordando para as ideias que nascem por
+					aqui.
+				</p>
+
+				<h2>Por que o nome Duck AI?</h2>
+				<p>
+					A escolha do pato tem dois motivos: um técnico e outro puramente pessoal.
+				</p>
+				<p>
+					O pato é um bicho versátil. Ele anda na terra, nada na água e voa no ar. Essa imagem
+					traduz bem o que eu queria construir: um laboratório capaz de transitar entre estatística,
+					inteligência artificial, engenharia de software e temas bem diferentes entre si, como
+					futebol, eleições e viagens.
+				</p>
+				<p>
+					Mas também tem o lado afetivo. Eu gosto muito de animais e tenho nos patos um dos meus
+					favoritos. Sempre me fascinou a parte migratória e a sensação de liberdade das aves. Sem
+					falar no carinho de longa data por três ícones que dispensam apresentação: Patolino, Pato
+					Donald e Psyduck.
+				</p>
+
+				<h2>Do sofrimento colorado à bancada de projetos</h2>
+				<p>
+					A Duck AI nasceu para juntar projetos que tinham potencial em comum, mas viviam soltos em
+					repositórios diferentes. O <strong>Ainda Dá</strong>, por exemplo, veio de uma vontade bem
+					concreta: como colorado e estatístico, eu queria colocar o sofrimento recente do
+					Internacional em números de verdade.
+				</p>
+				<p>
+					O embalo veio logo depois da Copa do Mundo de 2026. No meu projeto aberto de previsões do
+					torneio (<a
+						href="https://github.com/VitorBSP/WC_26_Predictins"
+						target="_blank"
+						rel="noopener noreferrer">WC_26_Predictins</a
+					>), o modelo acertou 4 das 5 melhores seleções e cravou o 1º e o 2º colocados. Ali ficou
+					claro que dava para transformar curiosidade estatística em ferramentas úteis para qualquer
+					pessoa testar.
+				</p>
+				<p>
+					No mesmo espírito nasceu o <strong>Radar Eleitoral</strong>, meu maior projeto até hoje em
+					volume de dados e engenharia, focado em leitura técnica e transparente de bases oficiais
+					do TSE e do IBGE. Aos poucos, outros experimentos da bancada também vão ganhando forma,
+					como o <strong>Viajador</strong> e o <strong>Robô do Cartola</strong>.
+				</p>
+
+				<h2>O que me encanta (e o que me preocupa) na IA</h2>
+				<p>
+					Eu acho genuinamente mágico o que a inteligência artificial permite fazer hoje. Ela tira
+					ideias antigas da gaveta e dá forma a projetos com velocidade, qualidade e visão de futuro
+					que, sozinho, eu levaria meses ou anos para alcançar.
+				</p>
+				<p>
+					Ao mesmo tempo, existe um risco que eu faço questão de discutir por aqui: a perda de senso
+					crítico. Se a gente terceirizar todo o pensamento para um modelo, corre o risco de abrir
+					mão justamente do que nos faz humanos, como criatividade, liberdade e capacidade real de
+					inovar. Na Duck AI, a IA acelera a oficina, mas a decisão e a responsabilidade continuam
+					sendo minhas.
 				</p>
 
 				<h2>Princípios editoriais inegociáveis</h2>
 				<ul>
 					<li>
-						<strong>Fontes primárias sempre citadas:</strong> nenhum dado eleitoral ou estatístico vai
-						ao ar sem link verificável para bases oficiais (como TSE, IBGE, Congresso Nacional ou
-						documentação técnica aberta).
+						<strong>Fontes primárias sempre citadas:</strong> nenhum dado eleitoral ou estatístico
+						vai ao ar sem link verificável para bases oficiais (como TSE, IBGE, Congresso Nacional
+						ou documentação técnica aberta).
 					</li>
 					<li>
-						<strong>Neutralidade analítica no Radar Eleitoral:</strong> separamos rigorosamente dado
-						observado, metodologia de modelo e incerteza — sem torcida nem adjetivação partidária.
+						<strong>Neutralidade total no Radar Eleitoral:</strong> separamos de forma explícita o
+						que é dado observado, o que é estimativa de modelo e qual é a margem de incerteza. Sem
+						torcida e sem adjetivação partidária.
 					</li>
 					<li>
-						<strong>IA como ferramenta, humano como editor:</strong> usamos agentes de IA para
-						pesquisa, organização e primeiros rascunhos, mas 100% do conteúdo publicado passa por
-						validação automatizada (Quality Gate) e revisão humana antes do merge.
+						<strong>Ciência clara antes do jargão:</strong> o objetivo aqui é fazer você entender a
+						ideia certa. Quando a matemática mais pesada fizer sentido, ela fica organizada em um
+						bloco opcional ou no código aberto.
 					</li>
 					<li>
-						<strong>Custo enxuto e métricas honestas:</strong> compartilhamos abertamente o que gera
-						uso real e receita — e também os experimentos que não funcionam.
+						<strong>Honestidade de bastidor:</strong> compartilho o que funcionou, quanto custou e
+						também os bugs, travas e experimentos que deram errado.
 					</li>
 				</ul>
 
 				<h2>Onde acompanhar</h2>
 				<p>
-					As atualizações diárias de código, modelos e experimentos saem no perfil único do X
-					(<strong>{BRAND_HANDLE_LABEL}</strong>) e no <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>.
+					As atualizações de código, modelos e bastidores saem no meu perfil do X (<a
+						href={X_PROFILE_URL}
+						target="_blank"
+						rel="noopener noreferrer"><strong>{BRAND_HANDLE_LABEL}</strong></a
+					>) e no{' '}
+					<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>.
 				</p>
 			</div>
 
