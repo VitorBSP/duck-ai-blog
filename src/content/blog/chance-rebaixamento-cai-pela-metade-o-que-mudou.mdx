@@ -1,0 +1,83 @@
+---
+title: "Por que a chance de rebaixamento pode cair pela metade em uma rodada"
+description: "Uma sequência de resultados pode derrubar o risco de queda de um time pela metade. Entenda a matemática simples por trás dessas mudanças bruscas de probabilidade."
+pubDate: 2026-11-23
+project: "ainda-da"
+campaign_id: "2026-11-23-ainda-da-chance-rebaixamento-cai-pela-metade"
+tags: ["ainda-da", "probabilidades", "rebaixamento", "brasileirao"]
+readingTimeMinutes: 5
+primarySources:
+  - label: "Ainda Dá: simulador de probabilidades do Brasileirão"
+    url: "https://vitorbsp.github.io/aindada/"
+  - label: "Tabela oficial e regulamento (CBF)"
+    url: "https://www.cbf.com.br/"
+  - label: "Cobertura de esportes (UOL)"
+    url: "https://www.uol.com.br/esporte/"
+methodologyNote: "Probabilidades vêm de modelos estatísticos com simulação de cenários. Elas descrevem incerteza e não garantem resultado nem servem como recomendação de aposta."
+ctaLabel: "Simular as chances do seu time no Ainda Dá"
+ctaUrl: "https://vitorbsp.github.io/aindada/"
+draft: true
+---
+
+import CaixaCTA from '../../components/mdx/CaixaCTA.astro';
+import DestaqueMetrica from '../../components/mdx/DestaqueMetrica.astro';
+import NotaMetodologica from '../../components/mdx/NotaMetodologica.astro';
+
+A manchete do UOL dizia que a chance de queda do Corinthians tinha caído pela metade, e que o Flamengo tinha chegado a 98% de chance de título. Quem lê isso pensa a mesma coisa: como um número muda tanto de uma semana para outra?
+
+A resposta é menos misteriosa do que parece. Não é o modelo ficando maluco. É a tabela encolhendo.
+
+## A conta por trás do susto
+
+Imagine que faltam poucas rodadas. Um time está perto da zona de rebaixamento e o modelo sorteia o resto do campeonato dezenas de milhares de vezes. Em cada sorteio, os jogos que faltam terminam de um jeito diferente. No final, basta contar: em quantos desses campeonatos simulados o time caiu?
+
+Agora o time vence um jogo importante. Dois efeitos acontecem ao mesmo tempo:
+
+1. Ele soma pontos e abre distância para quem está embaixo.
+2. Sobram menos jogos para o azar atrapalhar.
+
+O segundo efeito pesa mais do que o torcedor imagina. Com muitos jogos pela frente, quase tudo ainda pode acontecer. Com poucos, as combinações perigosas somem rápido.
+
+<DestaqueMetrica
+  itens={[
+    { valor: "~50%", rotulo: "Queda no risco citada na manchete", nota: "Efeito de uma sequência de resultados favoráveis" },
+    { valor: "98%", rotulo: "Chance de título do líder na mesma manchete", nota: "Perto do teto, mas ainda não é 100%" },
+    { valor: "10.000+", rotulo: "Cenários sorteados por modelos como o do Ainda Dá", nota: "A probabilidade é a fração de cenários em que o evento ocorre" },
+  ]}
+/>
+
+## Por que "cair pela metade" não é exagero
+
+Os números nas pontas se movem devagar. Os do meio se movem rápido.
+
+Um time com 2% de risco ou 98% de chance já está perto de um extremo. Quase nada o tira dali. Já um clube com risco de 30% a 40% vive na parte mais sensível da curva. Um empate a mais, uma derrota de um rival direto, e o número despenca.
+
+Pense numa gangorra. Perto do centro, um pequeno peso muda tudo. Perto das pontas, quase não muda.
+
+## Os rivais também jogam
+
+Aqui está o ponto que a intuição esquece. A chance de queda de um time depende do que acontece com os concorrentes diretos. Se o rival que brigava embaixo perde, o seu time melhora sem ter feito nada. Em confrontos diretos, um ganha e o outro perde, e o risco troca de lado.
+
+Por isso modelos sérios não olham para um clube isolado. Eles simulam a tabela inteira de uma vez, respeitando os critérios de desempate do regulamento.
+
+## 98% ainda deixa 2%
+
+Quando o líder aparece com 98% de título, o certo é ler que em 2 de cada 100 cenários simulados algo deu errado para ele. Isso é raro, mas não é impossível. Probabilidade alta não é resultado pronto.
+
+O mesmo vale para o risco de rebaixamento que caiu pela metade. Se ele foi de, digamos, 20% para 10%, o clube continua caindo em 1 de cada 10 universos simulados. É um alívio real, e não é uma salvação.
+
+<NotaMetodologica titulo="Nota Metodológica" projeto="Ainda Dá">
+  Os percentuais citados da manchete vêm da cobertura do UOL e de modelos que não são os do Ainda Dá. Cada modelo usa premissas próprias (força dos times, mando de campo, calendário). Por isso dois sites podem divulgar números diferentes para o mesmo time no mesmo dia. Isso não significa que um errou. Significa que parte da incerteza está nas premissas. Nada aqui é recomendação de aposta.
+</NotaMetodologica>
+
+## Como testar na prática
+
+Em vez de confiar num número parado, mude uma variável e veja o que acontece. No simulador do Ainda Dá você fixa o resultado de um jogo e o modelo recalcula todas as chances. É a melhor forma de entender por que uma única rodada vale tanto.
+
+<CaixaCTA
+  campaignId="2026-11-23-ainda-da-chance-rebaixamento-cai-pela-metade"
+  titulo="Teste o seu time"
+  descricao="Fixe resultados e veja como as chances de título, G-4 e rebaixamento mudam em tempo real."
+  rotuloBotao="Simular no Ainda Dá"
+  url="https://vitorbsp.github.io/aindada/"
+/>
