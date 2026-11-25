@@ -1,0 +1,82 @@
+---
+title: "158 milhões de eleitores aptos: como o perfil do eleitorado calibra uma pesquisa"
+description: "Como os microdados do perfil do eleitorado do TSE servem de régua para ponderar amostras de pesquisas, com um exemplo hipotético e os limites dessa técnica."
+pubDate: 2026-11-25
+project: "radar-eleitoral"
+campaign_id: "2026-11-25-radar-eleitoral-perfil-eleitorado-ponderacao"
+tags: ["radar-eleitoral", "perfil-do-eleitorado", "dados-abertos", "ponderacao", "estatistica"]
+readingTimeMinutes: 6
+primarySources:
+  - label: "Portal de Dados Abertos do TSE (perfil do eleitorado)"
+    url: "https://dadosabertos.tse.jus.br/"
+  - label: "Tribunal Superior Eleitoral (Estatísticas do Eleitorado)"
+    url: "https://www.tse.jus.br/"
+  - label: "IBGE (Censo e malha municipal)"
+    url: "https://www.ibge.gov.br/"
+  - label: "Radar Eleitoral (metodologia aberta)"
+    url: "https://radar-eleitoral-web-one.vercel.app/"
+methodologyNote: "Texto técnico, educativo e apartidário. O único número oficial citado é a ordem de grandeza do eleitorado apto em 2026 (mais de 158 milhões, segundo divulgação do TSE). O exemplo de ponderação usa valores hipotéticos, indicados como tal."
+ctaLabel: "Explorar dados e modelos no Radar Eleitoral"
+ctaUrl: "https://radar-eleitoral-web-one.vercel.app/"
+draft: false
+---
+
+import CaixaCTA from '../../components/mdx/CaixaCTA.astro';
+import DestaqueMetrica from '../../components/mdx/DestaqueMetrica.astro';
+import NotaMetodologica from '../../components/mdx/NotaMetodologica.astro';
+
+Uma pesquisa eleitoral entrevista poucos milhares de pessoas para falar de mais de 158 milhões. Segundo o **[TSE](https://www.tse.jus.br/)**, esse é o tamanho do eleitorado apto a votar nas Eleições 2026. A conta só fecha se a amostra se parecer com esse eleitorado.
+
+E quase nunca se parece por conta própria. Quem atende telefone, quem aceita responder na rua, quem tem tempo: tudo isso desvia a amostra. O jeito de corrigir o desvio começa numa base pública, o perfil do eleitorado.
+
+<DestaqueMetrica
+  itens={[
+    { valor: "158 mi+", rotulo: "Eleitores aptos em 2026", nota: "Ordem de grandeza divulgada pelo TSE" },
+    { valor: "Microdados", rotulo: "Perfil do eleitorado", nota: "Disponíveis no portal de Dados Abertos do TSE" },
+    { valor: "Hipotético", rotulo: "Exemplo deste texto", nota: "Números ilustrativos, não são resultado de pesquisa" },
+  ]}
+/>
+
+## O que o perfil do eleitorado entrega
+
+No **[Portal de Dados Abertos do TSE](https://dadosabertos.tse.jus.br/)**, os arquivos de perfil do eleitorado agrupam o cadastro por recortes como unidade da federação, município, faixa etária, gênero e grau de instrução. Não é opinião nem estimativa de modelo. É o cadastro oficial, com data de referência.
+
+Para quem modela, isso funciona como a "régua" da população. Se o cadastro diz que determinada faixa etária representa certa fatia do eleitorado e a amostra tem fatia muito diferente, existe um desbalanceamento a corrigir.
+
+## Ponderação em um exemplo hipotético
+
+Imagine, só para ilustrar, um eleitorado com duas faixas: 40% de pessoas até 44 anos e 60% de 45 anos ou mais. Uma pesquisa de 1.000 entrevistas acabou com 55% de respondentes na primeira faixa e 45% na segunda, porque os mais jovens atendiam mais o telefone.
+
+O ajuste mais simples (pós-estratificação) dá a cada respondente um peso igual à fatia real dividida pela fatia na amostra:
+
+* Faixa mais jovem: 0,40 / 0,55 ≈ 0,73. Cada resposta vale um pouco menos.
+* Faixa mais velha: 0,60 / 0,45 ≈ 1,33. Cada resposta vale um pouco mais.
+
+Depois do ajuste, a amostra "se comporta" como se tivesse a composição do cadastro. Os números são inventados para o exemplo, e é isso que ele mostra: a técnica é mecânica e auditável.
+
+## O que a ponderação não resolve
+
+Aqui mora o cuidado que separa análise séria de ilusão de precisão.
+
+1. **Peso não cria informação.** Se quase ninguém de uma faixa foi entrevistado, dar peso alto a poucos respondentes aumenta a variância. A margem de erro efetiva cresce.
+2. **Cadastro não é comportamento.** O perfil mostra quem está apto, não quem vai votar. Abstenção varia por região e perfil, e usar o cadastro como se fosse o comparecimento real é um erro comum.
+3. **Escolhas de variáveis mudam o resultado.** Ponderar por idade e escolaridade dá resultado diferente de ponderar só por idade. Por isso o método precisa vir descrito, e cada instituto tem o seu (o chamado efeito de casa, ou *house effect*).
+4. **Defasagem.** O cadastro tem data de referência. Comparar pesquisas de épocas diferentes com cadastros diferentes exige registrar qual foi usado.
+
+## Como o Radar Eleitoral trata isso
+
+No **[Radar Eleitoral](https://radar-eleitoral-web-one.vercel.app/)**, a regra é separar o dado observado (cadastro oficial, com data e filtro registrados) da estimativa de modelo, e mostrar a incerteza junto com o número. Códigos de município do TSE e do **[IBGE](https://www.ibge.gov.br/)** são padronizados antes de qualquer cruzamento, porque as duas bases usam códigos diferentes e juntar sem conferir gera erro silencioso.
+
+<NotaMetodologica titulo="Nota Metodológica e Fontes Primárias" projeto="Radar Eleitoral">
+  Fontes primárias: <code>tse.jus.br</code>, <code>dadosabertos.tse.jus.br</code> e <code>ibge.gov.br</code>. O exemplo de ponderação usa valores hipotéticos e não representa nenhuma pesquisa real. Este texto não avalia candidatos, partidos ou resultados, apenas método. Revisão humana obrigatória antes da publicação.
+</NotaMetodologica>
+
+Se você analisa pesquisas, vale uma pergunta antes de olhar qualquer percentual: qual cadastro serviu de régua, e com quais variáveis a amostra foi corrigida? Sem essa resposta, o número tem pouco a dizer.
+
+<CaixaCTA
+  titulo="Explore os painéis e modelos do Radar Eleitoral"
+  descricao="Consulte visualizações construídas sobre dados públicos oficiais e acompanhe a metodologia aberta do projeto."
+  rotuloBotao="Acessar o Radar Eleitoral"
+  url="https://radar-eleitoral-web-one.vercel.app/"
+  campaignId="2026-11-25-radar-eleitoral-perfil-eleitorado-ponderacao"
+/>
