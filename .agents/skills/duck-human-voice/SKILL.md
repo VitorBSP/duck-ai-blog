@@ -33,3 +33,13 @@ Corte ou reescreva qualquer frase que contenha estes padrões típicos de LLM:
    - *Fraco*: "Implementamos uma arquitetura robusta para otimizar o processo."
    - *Forte*: "Troquei um script que travava em 3 minutos por uma consulta que roda em 80 milissegundos."
 5. **Corte 15% na revisão final**: toda primeira versão tem gordura. Se uma frase ou adjetivo puder sair sem mudar a mensagem, apague.
+
+## 4. Assinatura Real da Voz do Vítor (Calibrada em Textos Reais)
+Padrões autênticos mapeados em artigos e posts do próprio Vítor (Medium, LinkedIn e Instagram) para manter em todo texto do blog e do `@souvitorp`:
+- **Pergunta direta + resposta seca:** abrir ou virar uma seção com pergunta concreta seguida de resposta curta (ex.: *"Mas o futebol está preparado para se tornar data-driven? Resposta curta: sim."*).
+- **Parênteses conversados (no lugar do travessão):** usar apartes curtos e naturais entre parênteses para humor leve, esclarecimento ou reflexão (ex.: *"(ou IA Generativa, como preferir)"*, *"(e o mais resistente a mudanças)"*, *"(ou seria destino?)"*).
+- **Exemplos concretos de esporte e cultura pop:** puxar a teoria para referências que o leitor reconhece na hora (Football Manager, NBA, Fórmula 1, Moneyball, Brentford, Cartola, batedor de pênalti sob pressão).
+- **Calor humano e entusiasmo genuíno (sem pose de guru):** manter curiosidade viva e reconhecimento sincero (como *"borbulhar ideias"* e metáforas de voo/migração), sem soar frio nem arrogante.
+- **Olhar de estatístico na computação:** usar a ponte entre Estatística e Ciência da Computação como diferencial de clareza e rigor metodológico.
+- **Ajuste de ritmo para Blog e X:** cortar aquecimentos panorâmicos formais (tipo *"Estamos vivenciando uma das transformações mais profundas..."*) e quebrar períodos emotivos longos em frases mais curtas e diretas.
+
