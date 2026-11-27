@@ -1,0 +1,80 @@
+---
+title: "Equipe de agentes com meta: o que funciona e o que quebra"
+description: "A ideia de montar uma equipe de agentes de IA que trabalha até bater uma meta é sedutora. Veja o que a Duck AI aprendeu na prática sobre limites, filas e revisão humana."
+pubDate: 2026-11-27
+project: "blog-central"
+campaign_id: "2026-11-27-blog-central-equipe-agentes-meta"
+tags: ["agentes-ia", "openbot", "build-in-public", "arquitetura"]
+readingTimeMinutes: 3
+primarySources:
+  - label: "Post de @luanzeraAI no X sobre equipes de agentes no OpenBot"
+    url: "https://x.com/luanzeraAI/status/2124657469288812640"
+  - label: "Documentação da GraphQL API do Buffer"
+    url: "https://developers.buffer.com/guides/introduction.html"
+methodologyNote: "Este texto parte do resumo público do post citado e da experiência de operação da própria Duck AI. Não reproduz nem avalia o conteúdo completo do guia original, e não traz benchmarks."
+ctaLabel: "Conhecer os projetos ativos da Duck AI"
+ctaUrl: "https://duck-ai-blog.pages.dev/projetos"
+draft: false
+---
+
+import CaixaCTA from '../../components/mdx/CaixaCTA.astro';
+import DestaqueMetrica from '../../components/mdx/DestaqueMetrica.astro';
+import NotaMetodologica from '../../components/mdx/NotaMetodologica.astro';
+
+Circulou na minha timeline um guia sobre montar uma equipe de agentes no OpenBot, com papéis como CTO, CMO, CFO e suporte, trabalhando até bater uma meta. A premissa é irresistível: você define o objetivo, a "empresa" de IA corre atrás.
+
+Eu curti o post porque ele toca num problema que vivo todo dia na Duck AI. Só que eu li apenas o resumo, então não vou comentar o guia em si. Vou contar o que aprendi operando agentes coordenados de verdade, com custo extra zero.
+
+## A promessa: papéis e uma meta
+
+Dividir agentes por função faz sentido. Cada um recebe um contexto menor, uma tarefa clara e um critério de saída. Isso economiza tokens e reduz alucinação, porque ninguém precisa carregar o projeto inteiro na cabeça.
+
+O risco aparece na parte do "até bater a meta". Um laço que só para quando o número sobe tem um incentivo perigoso: fazer qualquer coisa para o número subir.
+
+## O que quebra primeiro
+
+Na minha operação, as quebras foram sempre as mesmas:
+
+1. **Cota de tokens.** Agentes que revisam uns aos outros em ciclo gastam o orçamento antes de entregar algo útil. Já contei esse episódio no texto sobre por que criei a Duck AI.
+2. **Escrita concorrente.** Dois agentes editando o mesmo arquivo de fila geram conflito e perda de dado silenciosa.
+3. **Meta sem freio.** Sem limite de iterações e sem um humano no fim da linha, o agente otimiza a métrica e esquece o objetivo real.
+
+<DestaqueMetrica
+  itens={[
+    { valor: "1 escritor", rotulo: "Por fila canônica", nota: "Coletores só gravam arquivos novos; um consolidador atualiza a fila" },
+    { valor: "0 posts", rotulo: "Publicados sem revisão", nota: "Tudo nasce como Pull Request e rascunho social" },
+    { valor: "Teto fixo", rotulo: "De iterações por tarefa", nota: "Limite explícito antes de pedir ajuda humana" },
+  ]}
+/>
+
+## Como a Duck AI organiza a equipe
+
+Os papéis existem, mas são bem menos glamourosos que um organograma de startup. Há coletores que apenas anotam o que encontram, um consolidador que ordena a fila e um redator que transforma a melhor pauta em rascunho.
+
+Três regras seguram o sistema:
+
+* **Inbox imutável:** cada coletor grava arquivos pequenos e novos, nunca edita o que já existe.
+* **Escritor único:** só um processo serializado atualiza a fila canônica.
+* **Humano no fim:** nenhum agente publica. O resultado passa por Pull Request, por um linter editorial e por mim.
+
+<NotaMetodologica titulo="O que este texto não afirma" projeto="Duck AI">
+  Não testei o fluxo descrito no guia original e não comparo ferramentas. As observações vêm do uso diário da Duck AI e valem para o meu contexto, com cotas gratuitas e supervisão humana. Resultados em outros cenários podem ser bem diferentes.
+</NotaMetodologica>
+
+## Uma meta melhor que "bater número"
+
+Se for montar sua equipe de agentes, troque a meta de resultado por metas de processo que você consegue auditar. Em vez de "dobrar os seguidores", algo como "entregar 3 rascunhos revisáveis por semana dentro do orçamento de tokens". O agente continua útil e você continua no controle.
+
+E guarde uma pergunta para a revisão: esse resultado existiria se eu não tivesse pedido? Se a resposta for não, volte uma etapa.
+
+## O que levo disso
+
+Equipe de agentes é uma boa ideia de organização, não um atalho para tirar o humano da conta. Funciona quando cada papel é pequeno, a escrita é serializada e alguém olha o resultado antes de ir ao ar.
+
+<CaixaCTA
+  titulo="Veja a operação em ação"
+  descricao="Conheça os projetos que a Duck AI mantém no ar e acompanhe os bastidores em público."
+  rotuloBotao="Ver projetos ativos"
+  url="https://duck-ai-blog.pages.dev/projetos"
+  campaignId="2026-11-27-blog-central-equipe-agentes-meta"
+/>
